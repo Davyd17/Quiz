@@ -4,7 +4,6 @@
 
 #ignore
 .idea/
-driver-connector/
 Quiz.iml
 mysql_connector/
 out/
