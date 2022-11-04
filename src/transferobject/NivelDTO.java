@@ -25,28 +25,36 @@ public class NivelDTO {
         return nivelId;
     }
 
+    public void setNivelId(int nivelId) {
+        this.nivelId = nivelId;
+    }
+
     public String getCategoria() {
         return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public int getPuntos() {
         return puntos;
     }
 
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
     public String getDificultad() {
         return dificultad;
     }
 
+    public void setDificultad(String dificultad) {
+        this.dificultad = dificultad;
+    }
+
     public ArrayList<PreguntaDTO> getPreguntas() {
         return preguntas;
-    }
-
-    public void setNivelId(int nivelId) {
-        this.nivelId = nivelId;
-    }
-
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
     }
 
     public void setPreguntas(ArrayList<PreguntaDTO> preguntas) {
