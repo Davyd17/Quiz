@@ -1,4 +1,4 @@
-package transferObject;
+package transferobject;
 
 import java.util.ArrayList;
 import entidades.Opcion;
