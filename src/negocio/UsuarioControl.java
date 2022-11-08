@@ -1,22 +1,22 @@
-package negocio.usuario;
+package negocio;
 
 import datos.UsuarioDAO;
 import entidades.Usuario;
 
-public class Registro{
+public class UsuarioControl {
 
     private final UsuarioDAO DATOS;
     private final Usuario OBJ;
 
-    public Registro(){
+    public UsuarioControl(){
         DATOS = new UsuarioDAO();
         OBJ = new Usuario();
     }
 
     public String registrar(String usuario,String contraseña) {
         String resp = "0";
-        Usuario usuario = this.DATOS.insertar()
 
+        return "0";
 
     }
 
