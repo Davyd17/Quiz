@@ -6,6 +6,11 @@ public class Usuario {
     private String nombreUsuario;
     private String contrasena;
 
+    /*
+    El rol se define entre 1 y 2:
+     1: Jugador
+     2: Administrador
+     */
     private int rolId;
 
     public Usuario(){
