@@ -10,4 +10,5 @@ public interface CrudSimpleInterface<T>{
     public List<T> listar(int index);
     public boolean insertar(T obj);
     public boolean actualizar(T obj);
+    public boolean existe(String texto);
 }
