@@ -137,4 +137,32 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
 
         return resp;
     }
+
+    @Override
+    public boolean existe(String texto){
+        this.resp = false;
+
+        try{
+
+            pst = CON.conectar().prepareStatement("SELECT nombre_usuario FROM usuario WHERE nombre = ?");
+            pst.setString(1, texto);
+            rs = pst.executeQuery();
+
+            if(rs.getRow() > 0){
+                this.resp = true;
+            }
+
+            pst.close();
+            rs.close();
+
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+
+        return resp;
+    }
 }
