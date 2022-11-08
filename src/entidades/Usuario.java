@@ -2,25 +2,34 @@ package entidades;
 
 public class Usuario {
 
-    private int id;
+    private int usuarioId;
     private String nombreUsuario;
-    private String contraseña;
+    private String contrasena;
+
+    private int rolId;
 
     public Usuario(){
     }
 
-    public Usuario(int id, String nombreUsuario, String contraseña){
-        this.id = id;
+    public Usuario(int usuarioId, String nombreUsuario, String contrasena, int rolId){
+        this.usuarioId = usuarioId;
         this.nombreUsuario = nombreUsuario;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
+        this.rolId = rolId;
     }
 
-    public int getId() {
-        return id;
+    public Usuario(int usuarioId, String nombreUsuario, int rolId) {
+        this.usuarioId = usuarioId;
+        this.nombreUsuario = nombreUsuario;
+        this.rolId = rolId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int adminId) {
+        this.usuarioId = adminId;
     }
 
     public String getNombreUsuario() {
@@ -31,11 +40,19 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public int getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(int rolId) {
+        this.rolId = rolId;
     }
 }

@@ -2,25 +2,25 @@ package entidades;
 
 public class Opcion {
 
-    private int id;
+    private int opcionId;
     private int preguntaId;
     private int contenido;
 
     public Opcion() {
     }
 
-    public Opcion(int id, int preguntaId, int contenido) {
-        this.id = id;
+    public Opcion(int opcionId, int preguntaId, int contenido) {
+        this.opcionId = opcionId;
         this.preguntaId = preguntaId;
         this.contenido = contenido;
     }
 
-    public int getId() {
-        return id;
+    public int getOpcionId() {
+        return opcionId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOpcionId(int opcionId) {
+        this.opcionId = opcionId;
     }
 
     public int getPreguntaId() {

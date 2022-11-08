@@ -5,43 +5,51 @@ package entidades;
 
 public class Nivel {
 
-    private int id;
+    private int nivelId;
     private String categoria;
     private int puntos;
     private String dificultad;
 
-    public Nivel(){
+    public Nivel() {
 
     }
 
-    public Nivel(int id, String categoria, int puntos, String dificultad) {
-        this.id = id;
+    public Nivel(int nivelId, String categoria, int puntos, String dificultad) {
+        this.nivelId = nivelId;
         this.categoria = categoria;
         this.puntos = puntos;
         this.dificultad = dificultad;
     }
 
-    public Nivel(String categoria) {
-        this.categoria = categoria;
+    public int getNivelId() {
+        return nivelId;
     }
 
-    public int getId() {
-        return id;
+    public void setNivelId(int nivelId) {
+        this.nivelId = nivelId;
     }
 
     public String getCategoria() {
         return categoria;
     }
 
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
     public int getPuntos() {
         return puntos;
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 
     public String getDificultad() {
         return dificultad;
     }
 
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
+    public void setDificultad(String dificultad) {
+        this.dificultad = dificultad;
     }
 }

@@ -1,25 +1,25 @@
 package entidades;
 
-public class Administrador {
+public class Administrador extends Usuario{
 
-    private int id;
+    private int adminId;
     private int usuarioId;
 
     public Administrador(){
 
     }
 
-    public Administrador(int id, int usuarioId){
-        this.id = id;
+    public Administrador(int adminId, int usuarioId){
+        this.adminId = adminId;
         this.usuarioId = usuarioId;
     }
 
-    public int getId() {
-        return id;
+    public int getAdminId() {
+        return adminId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
     }
 
     public int getUsuarioId() {

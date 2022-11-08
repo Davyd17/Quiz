@@ -2,25 +2,25 @@ package entidades;
 
 public class Pregunta {
 
-    private int id;
+    private int preguntaId;
     private int nivelId;
     private String contenido;
 
     public Pregunta() {
     }
 
-    public Pregunta(int id, int nivelId, String contenido) {
-        this.id = id;
+    public Pregunta(int preguntaId, int nivelId, String contenido) {
+        this.preguntaId = preguntaId;
         this.nivelId = nivelId;
         this.contenido = contenido;
     }
 
-    public int getId() {
-        return id;
+    public int getPreguntaId() {
+        return preguntaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPreguntaId(int preguntaId) {
+        this.preguntaId = preguntaId;
     }
 
     public int getNivelId() {

@@ -1,8 +1,8 @@
 package entidades;
 
-public class Jugador {
+public class Jugador extends Usuario{
 
-    private int id;
+    private int jugadorId;
     private int usuarioId;
     private int nivelId;
     private int puntosAcumulados;
@@ -10,19 +10,19 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(int id, int usuarioId, int nivelId, int puntosAcumulados) {
-        this.id = id;
+    public Jugador(int jugadorId, int usuarioId, int nivelId, int puntosAcumulados) {
+        this.jugadorId = jugadorId;
         this.usuarioId = usuarioId;
         this.nivelId = nivelId;
         this.puntosAcumulados = puntosAcumulados;
     }
 
-    public int getId() {
-        return id;
+    public int getJugadorId() {
+        return jugadorId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setJugadorId(int jugadorId) {
+        this.jugadorId = jugadorId;
     }
 
     public int getUsuarioId() {
