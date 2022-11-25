@@ -11,22 +11,22 @@ public class Usuario {
      1: Jugador
      2: Administrador
      */
-    private int rolId;
+    private int rol;
 
     public Usuario(){
     }
 
-    public Usuario(int usuarioId, String nombreUsuario, String contrasena, int rolId){
+    public Usuario(int usuarioId, String nombreUsuario, String contrasena, int rol){
         this.usuarioId = usuarioId;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
-        this.rolId = rolId;
+        this.rol = rol;
     }
 
-    public Usuario(int usuarioId, String nombreUsuario, int rolId) {
+    public Usuario(int usuarioId, String nombreUsuario, int rol) {
         this.usuarioId = usuarioId;
         this.nombreUsuario = nombreUsuario;
-        this.rolId = rolId;
+        this.rol = rol;
     }
 
     public int getUsuarioId() {
@@ -53,11 +53,11 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public int getRolId() {
-        return rolId;
+    public int getRol() {
+        return rol;
     }
 
-    public void setRolId(int rolId) {
-        this.rolId = rolId;
+    public void setRol(int rol) {
+        this.rol = rol;
     }
 }

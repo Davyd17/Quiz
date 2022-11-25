@@ -3,7 +3,6 @@ package entidades;
 public class Administrador extends Usuario{
 
     private int adminId;
-    private int usuarioId;
 
     public Administrador(){
 
@@ -11,8 +10,15 @@ public class Administrador extends Usuario{
 
     public Administrador(int adminId, int usuarioId){
         this.adminId = adminId;
-        this.usuarioId = usuarioId;
+        super.setUsuarioId(usuarioId);
     }
+
+    public Administrador(int usuarioId, int adminId, String nombreUsuario) {
+        super.setUsuarioId(usuarioId);
+        this.adminId = adminId;
+        this.setNombreUsuario(nombreUsuario);
+    }
+
 
     public int getAdminId() {
         return adminId;
@@ -22,11 +28,13 @@ public class Administrador extends Usuario{
         this.adminId = adminId;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
-    }
 
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    @Override
+    public String toString() {
+        return "Administrador{" +
+                "adminId=" + adminId +
+                ", nombreUsuario" + super.getNombreUsuario() +
+                ", usuarioId=" + super.getUsuarioId() +
+                '}';
     }
 }

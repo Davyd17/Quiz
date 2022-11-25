@@ -2,14 +2,16 @@ package datos;
 
 import datos.interfaces.CrudSimpleInterface;
 import database.Conexion;
+import entidades.Administrador;
+import entidades.Jugador;
 import entidades.Usuario;
 
 import javax.swing.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // Clase UsuarioDAO que se encarga de comunicarse con la base de datos, especificamente la tabla usuario, implementando el patron Data Acces Object.
 
@@ -27,17 +29,33 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
     }
 
     // metodo que se encarga de consultar si coincide o no el usuario ingresado (LogIn)
-    public boolean consultar(Usuario obj){
+    public Usuario iniciarSesion(String nombreUsuario, String contrasena){
+        Connection con;
+        Usuario usuario = null;
 
         try{
 
-            pst = CON.conectar().prepareStatement("SELECT nombre_usuario, contraseña FROM usuario WHERE nombre_usuario = ? and contraseña = ?");
-            pst.setString(1, obj.getNombreUsuario());
-            pst.setString(2, obj.getContrasena());
+            con = CON.conectar();
+            pst = con.prepareStatement("SELECT id, nombre_usuario, contraseña, rol FROM usuario WHERE nombre_usuario = ? AND contraseña = ?");
+            pst.setString(1, nombreUsuario);
+            pst.setString(2, contrasena);
             rs = pst.executeQuery();
 
-            if (rs.next()){
-                resp = true;
+            if(rs.next()){
+                if(rs.getInt(4) == 1) {
+                    pst = con.prepareStatement("SELECT u.id, a.id AS administrador_id, u.nombre_usuario FROM usuario u INNER JOIN administrador a ON u.id = a.usuario_id;");
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        usuario = new Administrador(rs.getInt(1), rs.getInt(2), rs.getString(3));
+                    }
+
+                } else if (rs.getInt(4) == 2){
+                    pst = con.prepareStatement("SELECT u.id, j.id AS jugador_id, u.nombre_usuario, j.nivel_id, j.puntos_acumulados FROM usuario u INNER JOIN jugador j ON u.id = j.usuario_id\n" + "");
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        usuario = new Jugador(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+                    }
+                }
             }
 
             pst.close();
@@ -51,7 +69,7 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
             rs = null;
         }
 
-        return resp;
+        return usuario;
     }
 
     @Override
@@ -85,25 +103,65 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
     @Override
     public boolean insertar(Usuario obj) {
 
+        Connection con = null;
         try {
+            con = CON.conectar();
+            con.setAutoCommit(false);
 
-            pst = CON.conectar().prepareStatement("INSERT INTO usuario VALUES(?,?,?,?)");
-            pst.setInt(1, obj.getUsuarioId());
-            pst.setString(2, obj.getNombreUsuario());
-            pst.setString(3, obj.getContrasena());
-            pst.setInt(4, obj.getRolId());
+            pst = con.prepareStatement("INSERT INTO usuario (nombre_usuario,contraseña,rol) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, obj.getNombreUsuario());
+            pst.setString(2, obj.getContrasena());
+            pst.setInt(3, obj.getRol());
 
-            if (pst.executeUpdate() > 0){
-                this.resp = true;
+            int filasAfectadas = pst.executeUpdate();
+            rs = pst.getGeneratedKeys();
+            int idGenerado = 0;
+
+            if(rs.next()){
+                idGenerado = rs.getInt(1);
             }
 
-            pst.close();
+            if(filasAfectadas == 1){
+                if (obj.getRol() == 1){
+                    pst = con.prepareStatement("INSERT INTO administrador (usuario_id) VALUES (?)");
+                    pst.setInt(1, idGenerado);
+                    resp = pst.executeUpdate() > 0;
+                    con.commit();
+
+                } else if (obj.getRol() == 2){
+                    pst = con.prepareStatement("INSERT INTO jugador (usuario_id) VALUES (?)");
+                    pst.setInt(1,idGenerado);
+                    resp = pst.executeUpdate() > 0;
+                    con.commit();
+                }
+
+            } else {
+                con.rollback();
+            }
 
         } catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+
+                JOptionPane.showMessageDialog(null, e.getMessage());
+
+
         } finally {
-            CON.desconectar();
-            pst = null;
+            try{
+
+                if(pst != null){
+                    pst.close();
+                }
+
+                if(rs != null){
+                    pst.close();
+                }
+
+                if (con != null){
+                    con.close();
+                }
+
+            }catch(SQLException e){
+                Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
         }
 
         return resp;
@@ -119,7 +177,7 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
             pst.setInt(1, obj.getUsuarioId());
             pst.setString(2, obj.getNombreUsuario());
             pst.setString(3, obj.getContrasena());
-            pst.setInt(4, obj.getRolId());
+            pst.setInt(4, obj.getRol());
             pst.setInt(5, obj.getUsuarioId());
 
             if (pst.executeUpdate() > 0){
@@ -144,7 +202,7 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
 
         try{
 
-            pst = CON.conectar().prepareStatement("SELECT nombre_usuario FROM usuario WHERE nombre = ?");
+            pst = CON.conectar().prepareStatement("SELECT nombre_usuario FROM usuario WHERE nombre_usuario = ?");
             pst.setString(1, texto);
             rs = pst.executeQuery();
 
@@ -165,4 +223,5 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
 
         return resp;
     }
+
 }

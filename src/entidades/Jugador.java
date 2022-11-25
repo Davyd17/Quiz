@@ -2,8 +2,8 @@ package entidades;
 
 public class Jugador extends Usuario{
 
+    // Error al sobreescribir la variable, eliminarla y llamar al metodo super en el contructor
     private int jugadorId;
-    private int usuarioId;
     private int nivelId;
     private int puntosAcumulados;
 
@@ -12,25 +12,27 @@ public class Jugador extends Usuario{
 
     public Jugador(int jugadorId, int usuarioId, int nivelId, int puntosAcumulados) {
         this.jugadorId = jugadorId;
-        this.usuarioId = usuarioId;
+        this.setUsuarioId(usuarioId);
         this.nivelId = nivelId;
         this.puntosAcumulados = puntosAcumulados;
     }
 
-    public int getJugadorId() {
+    public Jugador(int usuarioId, int jugadorId, String nombreUsuario,  int nivelId, int puntosAcumulados) {
+        super.setUsuarioId(usuarioId);
+        super.setNombreUsuario(nombreUsuario);
+        this.jugadorId = jugadorId;
+        this.nivelId = nivelId;
+        this.puntosAcumulados = puntosAcumulados;
+    }
+
+
+
+    public int getRol() {
         return jugadorId;
     }
 
-    public void setJugadorId(int jugadorId) {
-        this.jugadorId = jugadorId;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setRol(int rol) {
+        this.jugadorId = rol;
     }
 
     public int getNivelId() {
@@ -48,5 +50,26 @@ public class Jugador extends Usuario{
     public void setPuntosAcumulados(int puntosAcumulados) {
         this.puntosAcumulados = puntosAcumulados;
     }
+
+    public int getJugadorId() {
+        return jugadorId;
+    }
+
+    public void setJugadorId(int jugadorId) {
+        this.jugadorId = jugadorId;
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador{" +
+                "jugadorId = " + jugadorId +
+                ", usuarioId = " + super.getUsuarioId() +
+                ", nombreUsuario = " + super.getNombreUsuario() +
+                ", nivelId = " + nivelId +
+                ", puntosAcumulados = " + puntosAcumulados +
+                '}';
+    }
 }
+
+
 
