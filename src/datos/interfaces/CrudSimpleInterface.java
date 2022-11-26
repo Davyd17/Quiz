@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CrudSimpleInterface<T>{
 
-    public List<T> listar(int index);
+    public List<T> listar();
     public boolean insertar(T obj);
     public boolean actualizar(T obj);
     public boolean existe(String texto);

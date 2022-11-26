@@ -73,7 +73,7 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario>{
     }
 
     @Override
-    public List<Usuario> listar(int index) {
+    public List<Usuario> listar() {
         List<Usuario> registro = new ArrayList<>();
 
         try {

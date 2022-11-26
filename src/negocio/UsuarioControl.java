@@ -75,10 +75,5 @@ public class UsuarioControl {
         return info;
         }
 
-    public static void main(String[] args) {
-        UsuarioControl usuarioControl = new UsuarioControl();
-        System.out.println(usuarioControl.inciarSesion("prueba", "123"));
-    }
-
 
     }
