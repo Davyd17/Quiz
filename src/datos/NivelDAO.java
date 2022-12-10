@@ -5,7 +5,7 @@ Clase NivelDAO que se encargara de acceder a los datos del objeto nivel, esta a 
 que contiene la guia para realizar un crud simple al objeto
 */
 
-import datos.interfaces.CrudSimpleInterface;
+import datos.interfaces.CrudJuegoInterface;
 import entidades.Nivel;
 import database.Conexion;
 
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NivelDAO implements CrudSimpleInterface<Nivel> {
+public class NivelDAO implements CrudJuegoInterface<Nivel> {
 
     private final Conexion CON;
     private PreparedStatement pst;
@@ -29,7 +29,9 @@ public class NivelDAO implements CrudSimpleInterface<Nivel> {
     }
 
     // Metodo que consulta los datos de un nivel en especifico
-    public Nivel mostrarNivel(int id){
+
+    @Override
+    public Nivel mostrar(int id){
 
         try{
 
@@ -53,6 +55,7 @@ public class NivelDAO implements CrudSimpleInterface<Nivel> {
         }
 
         return nivel;
+
     }
 
     @Override
@@ -107,46 +110,22 @@ public class NivelDAO implements CrudSimpleInterface<Nivel> {
     @Override
     public boolean actualizar(Nivel obj) {
 
-        try{
+        try {
             pst = CON.conectar().prepareStatement("UPDATE nivel SET categoria = ?, puntos = ?, dificultad = ? WHERE id = ?");
             pst.setString(1, obj.getCategoria());
-            pst.setInt(2,obj.getPuntos());
-            pst.setString(3,obj.getDificultad());
-            pst.setInt(4,obj.getNivelId());
+            pst.setInt(2, obj.getPuntos());
+            pst.setString(3, obj.getDificultad());
+            pst.setInt(4, obj.getNivelId());
 
             resp = pst.executeUpdate() > 0;
 
             pst.close();
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } finally {
             CON.desconectar();
             pst = null;
-        }
-        return resp;
-    }
-
-    @Override
-    public boolean existe(String texto) {
-
-        try{
-
-            pst = CON.conectar().prepareStatement("SELECT categoria WHERE categoria = ?");
-            pst.setString(1, texto);
-            rs = pst.executeQuery();
-
-            resp = rs.next();
-
-            pst.close();
-            rs.close();
-
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,e.getMessage());
-        } finally {
-            CON.desconectar();
-            pst = null;
-            rs = null;
         }
         return resp;
     }
