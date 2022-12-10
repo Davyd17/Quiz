@@ -4,12 +4,12 @@ public class Opcion {
 
     private int opcionId;
     private int preguntaId;
-    private int contenido;
+    private String contenido;
 
     public Opcion() {
     }
 
-    public Opcion(int opcionId, int preguntaId, int contenido) {
+    public Opcion(int opcionId, int preguntaId, String contenido) {
         this.opcionId = opcionId;
         this.preguntaId = preguntaId;
         this.contenido = contenido;
@@ -31,11 +31,11 @@ public class Opcion {
         this.preguntaId = preguntaId;
     }
 
-    public int getContenido() {
+    public String getContenido() {
         return contenido;
     }
 
-    public void setContenido(int contenido) {
+    public void setContenido(String contenido) {
         this.contenido = contenido;
     }
 }
