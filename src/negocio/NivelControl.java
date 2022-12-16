@@ -4,12 +4,12 @@ package negocio;
 
 import datos.NivelDAO;
 import entidades.Nivel;
+import negocio.interfaces.ControlInterface;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NivelControl {
+public class NivelControl implements ControlInterface<Nivel> {
 
     private final NivelDAO DATOS;
     private Nivel nivel;
@@ -18,7 +18,7 @@ public class NivelControl {
         DATOS = new NivelDAO();
     }
 
-    public List<String> mostrarNivel(int id){
+    public List<String> obtenerContenido(int id){
 
         List<String> info = new ArrayList<>();
 
