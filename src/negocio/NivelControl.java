@@ -2,38 +2,39 @@ package negocio;
 
 // Clase NivelControl encargada de interactuar y controlar el CRUD del objeto Nivel
 
-import datos.NivelDAO;
+import datos.niveldao.NivelCrud;
 import entidades.Nivel;
-import negocio.interfaces.ControlInterface;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class NivelControl implements ControlInterface<Nivel> {
+import javax.swing.*;
 
-    private final NivelDAO DATOS;
-    private Nivel nivel;
 
-    public NivelControl(){
-        DATOS = new NivelDAO();
+public class NivelControl{
+
+    private final NivelCrud DATOS;
+
+    public NivelControl() {
+        DATOS = new NivelCrud();
     }
 
-    public List<String> obtenerContenido(int id){
+    public Nivel obtenerNivel(int id){
 
-        List<String> info = new ArrayList<>();
+        Nivel nivel = DATOS.obtener(id);
 
-        nivel = DATOS.mostrar(id);
-
-        if(nivel != null){
-            info.add(Integer.toString(nivel.getNivelId()));
-            info.add(nivel.getCategoria());
-            info.add(Integer.toString(nivel.getPuntos()));
-            info.add(nivel.getDificultad());
+        if(nivel == null){
+            JOptionPane.showMessageDialog(null, "Hubo un error al momento de obtener el nivel");
         }
 
-        return info;
+        return nivel;
     }
 
+
 }
+
+
+
+
+
+
 
 

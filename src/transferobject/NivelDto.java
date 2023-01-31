@@ -2,18 +2,18 @@ package transferobject;
 
 import java.util.ArrayList;
 
-public class NivelDTO {
+public class NivelDto {
 
     private int nivelId;
     private String categoria;
     private int puntos;
     private String dificultad;
-    private ArrayList<PreguntaDTO> preguntas = new ArrayList<>();
+    private ArrayList<PreguntaDto> preguntas = new ArrayList<>();
 
-    public NivelDTO() {
+    public NivelDto() {
     }
 
-    public NivelDTO(int nivelId, String categoria, int puntos, String dificultad, ArrayList<PreguntaDTO> preguntas) {
+    public NivelDto(int nivelId, String categoria, int puntos, String dificultad, ArrayList<PreguntaDto> preguntas) {
         this.nivelId = nivelId;
         this.categoria = categoria;
         this.puntos = puntos;
@@ -53,11 +53,11 @@ public class NivelDTO {
         this.dificultad = dificultad;
     }
 
-    public ArrayList<PreguntaDTO> getPreguntas() {
+    public ArrayList<PreguntaDto> getPreguntas() {
         return preguntas;
     }
 
-    public void setPreguntas(ArrayList<PreguntaDTO> preguntas) {
+    public void setPreguntas(ArrayList<PreguntaDto> preguntas) {
         this.preguntas = preguntas;
     }
 }

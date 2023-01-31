@@ -1,40 +1,33 @@
 package entidades;
 
+// Entidad que mapea la tabla usuario de la base de datos
 public class Usuario {
 
-    private int usuarioId;
+    // Atributos
+    private int id;
     private String nombreUsuario;
     private String contrasena;
+    private int rol; // El rol se define entre 1 y 2: (1 - Administrador), (2 - Jugador)
 
-    /*
-    El rol se define entre 1 y 2:
-     1: Jugador
-     2: Administrador
-     */
-    private int rol;
-
+    // Constructor
     public Usuario(){
     }
 
-    public Usuario(int usuarioId, String nombreUsuario, String contrasena, int rol){
-        this.usuarioId = usuarioId;
+    //Constructor por defecto
+    public Usuario(int id, String nombreUsuario, String contrasena, int rol){
+        this.id = id;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.rol = rol;
     }
 
-    public Usuario(int usuarioId, String nombreUsuario, int rol) {
-        this.usuarioId = usuarioId;
-        this.nombreUsuario = nombreUsuario;
-        this.rol = rol;
+    // Getters & Setters
+    public int getId() {
+        return id;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int adminId) {
-        this.usuarioId = adminId;
+    public void setId(int adminId) {
+        this.id = adminId;
     }
 
     public String getNombreUsuario() {
@@ -59,5 +52,15 @@ public class Usuario {
 
     public void setRol(int rol) {
         this.rol = rol;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", rol=" + rol +
+                '}';
     }
 }

@@ -1,43 +1,45 @@
 package negocio;
 
-import datos.UsuarioDAO;
+import datos.administradordao.AdministradorCrud;
+import datos.jugadordao.JugadorCrud;
+import datos.usuariodao.ExistenciaUsuario;
+import datos.usuariodao.UsuarioCrud;
+import datos.usuariodao.UsuarioInicioSesion;
 import entidades.Administrador;
 import entidades.Jugador;
 import entidades.Usuario;
 import mapper.AdminMapper;
 import mapper.JugadorMapper;
-import transferobject.AdminDTO;
-import transferobject.JugadorDTO;
+import transferobject.AdminDto;
+import transferobject.JugadorDto;
+import transferobject.UsuarioDto;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UsuarioControl {
 
-    private final UsuarioDAO DATOS;
-    private final Usuario OBJ;
-    private final AdminMapper ADMAP;
-    private final JugadorMapper JUGMAP;
+    private final UsuarioCrud DATOS;
+    private Usuario usuario;
+    private UsuarioDto usuarioDto;
 
-    public UsuarioControl(){
-        DATOS = new UsuarioDAO();
-        OBJ = new Usuario();
-        ADMAP = new AdminMapper();
-        JUGMAP = new JugadorMapper();
+    public UsuarioControl() {
+        DATOS = new UsuarioCrud();
+        usuario = new Usuario();
     }
 
-    public String registrar(String usuario,String contrasena, int rol) {
+    public String registrar(String nombreUsuario, String contrasena, int rol) {
 
-        if(DATOS.existe(usuario)){
+        ExistenciaUsuario existencia = new ExistenciaUsuario();
+
+        if (existencia.encontrar(nombreUsuario)) {
             return "El usuario ya existe";
         } else {
 
-            OBJ.setNombreUsuario(usuario);
-            OBJ.setContrasena(contrasena);
-            OBJ.setRol(rol);
+            this.usuario.setNombreUsuario(nombreUsuario);
+            this.usuario.setContrasena(contrasena);
+            this.usuario.setRol(rol);
 
-            if(DATOS.insertar(OBJ)){
+            if (DATOS.insertar(this.usuario)) {
                 return "OK";
             } else {
                 return "No fue posible realizar el registro";
@@ -46,34 +48,34 @@ public class UsuarioControl {
 
     }
 
-    public List<String> inciarSesion(String nombreUsuario, String contrasena){
+    public UsuarioDto IniciarSesion(String nombreUsuario, String contrasena){
 
+        UsuarioInicioSesion logIn = new UsuarioInicioSesion();
 
-        List<String> info = new ArrayList<>();
+        this.usuario = logIn.iniciarSesion(nombreUsuario,contrasena);
 
-        Usuario usuario = DATOS.iniciarSesion(nombreUsuario,contrasena);
+        if(this.usuario != null){
+            if(this.usuario.getRol() == 1){
 
-        if(usuario != null) {
-            if (usuario.equals(new Administrador())) {
-                AdminDTO adminDTO = ADMAP.CreateDTO((Administrador) usuario);
-                info.add(Integer.toString(adminDTO.getUsuarioId()));
-                info.add(Integer.toString(adminDTO.getAdminId()));
-                info.add(adminDTO.getNombre_usuario());
+                Administrador administrador = new AdministradorCrud().obtener(this.usuario.getId());
 
-            } else {
-                JugadorDTO jugadorDTO = JUGMAP.CreateDTO((Jugador) usuario);
-                info.add(Integer.toString(jugadorDTO.getUsuarioId()));
-                info.add((Integer.toString(jugadorDTO.getJugadorId())));
-                info.add(jugadorDTO.getNombreUsuario());
-                info.add((Integer.toString(jugadorDTO.getNivelId())));
-                info.add((Integer.toString(jugadorDTO.getPuntosAcumulados())));
+                this.usuarioDto = new AdminMapper().CreateDTO(administrador,this.usuario);
 
+            } else if (this.usuario.getRol() == 2) {
+
+                Jugador jugador = new JugadorCrud().obtener(this.usuario.getId());
+
+                this.usuarioDto = new JugadorMapper().CreateDTO(jugador, this.usuario);
             }
         }
 
-
-        return info;
-        }
-
-
+        return usuarioDto;
     }
+
+    public static void main(String[] args) {
+
+        UsuarioControl usuarioControl = new UsuarioControl();
+        System.out.println(usuarioControl.registrar("prueba13","123",2));
+    }
+
+}

@@ -4,41 +4,22 @@ package transferobject;
 
 import java.io.Serializable;
 
-public class JugadorDTO implements Serializable {
+public class  JugadorDto extends UsuarioDto implements Serializable {
 
-    private int usuarioId;
     private int jugadorId;
-    private String nombreUsuario;
     private int nivelId;
     private int puntosAcumulados;
 
+    public JugadorDto(){
 
-
-    public JugadorDTO() {
     }
 
-    public JugadorDTO(int usuarioId, int jugadorId, String nombreUsuario, int nivelId, int puntosAcumulados) {
-        this.usuarioId = usuarioId;
+    public JugadorDto(int usuarioId, int jugadorId, String nombreUsuario, int nivelId, int puntosAcumulados) {
+        super.setUsuarioId(usuarioId);
         this.jugadorId = jugadorId;
-        this.nombreUsuario = nombreUsuario;
+        super.setNombreUsuario(nombreUsuario);
         this.nivelId = nivelId;
         this.puntosAcumulados = puntosAcumulados;
-    }
-
-    public int getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(int usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
     }
 
     public int getNivelId() {
@@ -65,5 +46,14 @@ public class JugadorDTO implements Serializable {
         this.jugadorId = jugadorId;
     }
 
-
+    @Override
+    public String toString() {
+        return "JugadorDto{" +
+                "usuarioId=" + super.getUsuarioId() +
+                ", jugadorId=" + jugadorId +
+                ", nombreUsuario='" + super.getNombreUsuario() + '\'' +
+                ", nivelId=" + nivelId +
+                ", puntosAcumulados=" + puntosAcumulados +
+                '}';
+    }
 }

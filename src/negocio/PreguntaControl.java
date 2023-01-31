@@ -1,20 +1,20 @@
 package negocio;
 
 
-import datos.PreguntaDAO;
+import datos.preguntadao.PreguntaCrud;
 import entidades.Pregunta;
-import negocio.interfaces.ControlInterface;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreguntaControl implements ControlInterface <Pregunta> {
+public class PreguntaControl {
 
-    private final PreguntaDAO DATOS;
+    private final PreguntaCrud DATOS;
     private Pregunta pregunta;
 
     public PreguntaControl(){
-        DATOS = new PreguntaDAO();
+        DATOS = new PreguntaCrud();
 
     }
 
@@ -22,10 +22,10 @@ public class PreguntaControl implements ControlInterface <Pregunta> {
 
         List<String> info = new ArrayList<>();
 
-        pregunta = DATOS.mostrar(id);
+        pregunta = DATOS.obtener(id);
 
         if(pregunta != null){
-            info.add(Integer.toString(pregunta.getPreguntaId()));
+            info.add(Integer.toString(pregunta.getId()));
             info.add(Integer.toString(pregunta.getNivelId()));
             info.add(pregunta.getContenido());
         }

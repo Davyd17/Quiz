@@ -1,11 +1,12 @@
 package presentacion;
 
 import negocio.UsuarioControl;
+import transferobject.AdminDto;
+import transferobject.JugadorDto;
+import transferobject.UsuarioDto;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Principal extends JFrame{
     private JPanel pnlPrincipal;
@@ -16,14 +17,16 @@ public class Principal extends JFrame{
     private JLabel lblContrasena;
     private JLabel lblRegistro;
     private JLabel lblRegistroLink;
-    private UsuarioControl  usuarioControl;
+    private JLabel lblUsuarioIncorrecto;
+    protected static JugadorDto jugadorDto;
+    protected static AdminDto adminDto;
+    protected static UsuarioDto usuarioDto;
 
     public Principal() {
         super("Quiz Game");
         this.setContentPane(pnlPrincipal);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.createUIComponents();
-        usuarioControl = new UsuarioControl();
     }
 
     @SuppressWarnings("unchecked")
@@ -50,18 +53,46 @@ public class Principal extends JFrame{
 
     private void btnLoginActionPerformed(){
 
-        List<String> info = new ArrayList<>(usuarioControl.inciarSesion(txtUsuario.getText(), txtContrasena.getText()));
+        usuarioDto = new UsuarioControl().IniciarSesion(txtUsuario.getText(),txtContrasena.getText());
 
-        if(info.isEmpty()){
+        if(usuarioDto != null) {
 
-            JOptionPane.showMessageDialog(this,"Nombre de usuario y/o contraseña incorrectos","Error",JOptionPane.WARNING_MESSAGE);
+            System.out.println(usuarioDto);
+
+            try {
+                if (Class.forName("transferobject.AdminDto").isInstance(usuarioDto)) {
+
+                    adminDto = (AdminDto) usuarioDto;
+                    this.dispose();
+                    InterfazAdministrador administrador = new InterfazAdministrador();
+                    administrador.setVisible(true);
+
+
+                } else if (Class.forName("transferobject.JugadorDto").isInstance(usuarioDto)) {
+
+                    jugadorDto = (JugadorDto) usuarioDto;
+                    this.dispose();
+                    Juego juego = new Juego();
+                    juego.setVisible(true);
+
+                } else{
+                    JOptionPane.showMessageDialog(this, "Ha ocurrido un error");
+                }
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
         } else{
 
-            JOptionPane.showMessageDialog(this, info);
-        }
+            lblUsuarioIncorrecto.setText("Nombre de usuario y/o contraseña incorrecto");
+            txtUsuario.setText("");
+            txtContrasena.setText("");
 
+        }
     }
+
     private void lblRegistrarActionPerformed(MouseEvent e){
+
         this.dispose();
         RegistroJugador rj = new RegistroJugador();
         rj.setVisible(true);

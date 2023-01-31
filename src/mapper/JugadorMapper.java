@@ -1,19 +1,20 @@
 package mapper;
 
 import entidades.Jugador;
-import transferobject.JugadorDTO;
+import entidades.Usuario;
+import transferobject.JugadorDto;
 
 //Mappeador que se encarga de enlazar la entidad Usuario y JugadorMapper
 
 public class JugadorMapper {
 
-    public JugadorDTO CreateDTO(Jugador jugador){
+    public JugadorDto CreateDTO(Jugador jugador, Usuario usuario){
 
-        JugadorDTO jugadorDTO = new JugadorDTO(
+        JugadorDto jugadorDTO = new JugadorDto(
 
                 jugador.getUsuarioId(),
-                jugador.getJugadorId(),
-                jugador.getNombreUsuario(),
+                jugador.getId(),
+                usuario.getNombreUsuario(),
                 jugador.getNivelId(),
                 jugador.getPuntosAcumulados()
 

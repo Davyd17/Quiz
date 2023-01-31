@@ -1,18 +1,17 @@
 package mapper;
 
 import entidades.Administrador;
-import transferobject.AdminDTO;
+import entidades.Usuario;
+import transferobject.AdminDto;
 
 public class AdminMapper {
 
-    public AdminDTO CreateDTO(Administrador administrador){
+    public AdminDto CreateDTO(Administrador administrador, Usuario usuario){
 
-        AdminDTO adminDTO = new AdminDTO(
+        return new AdminDto(
                 administrador.getUsuarioId(),
-                administrador.getAdminId(),
-                administrador.getNombreUsuario()
+                administrador.getId(),
+                usuario.getNombreUsuario()
         );
-
-        return adminDTO;
     }
 }

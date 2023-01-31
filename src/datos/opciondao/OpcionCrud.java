@@ -1,7 +1,7 @@
-package datos;
+package datos.opciondao;
 
 import database.Conexion;
-import datos.interfaces.CrudJuegoInterface;
+import datos.interfaces.InterfaceCrud;
 import entidades.Opcion;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class OpcionDAO implements CrudJuegoInterface<Opcion> {
+public class OpcionCrud implements InterfaceCrud<Opcion> {
 
     private final Conexion CON;
     private PreparedStatement pst;
@@ -19,11 +19,13 @@ public class OpcionDAO implements CrudJuegoInterface<Opcion> {
     private boolean resp;
 
 
-    public OpcionDAO(){
+    public OpcionCrud(){
         CON = Conexion.getInstance();
     }
+
+    //READ
     @Override
-    public Opcion mostrar(int id) {
+    public Opcion obtener(int id) {
 
         try{
 
@@ -32,7 +34,7 @@ public class OpcionDAO implements CrudJuegoInterface<Opcion> {
             rs = pst.executeQuery();
 
             while(rs.next()){
-                opcion = new Opcion(rs.getInt(1),rs.getInt(2),rs.getString(3));
+                opcion = new Opcion(rs.getInt(1),rs.getInt(2),rs.getString(3), rs.getBoolean(4));
             }
 
             pst.close();
@@ -48,19 +50,16 @@ public class OpcionDAO implements CrudJuegoInterface<Opcion> {
         return opcion;
     }
 
-    @Override
-    public List<Opcion> listar() {
-        return null;
-    }
-
+    //CREATE
     @Override
     public boolean insertar(Opcion obj) {
 
         try{
 
-            pst = CON.conectar().prepareStatement("INSERT INTO opcion (pregunta_id,contenido) VALUES (?,?)");
+            pst = CON.conectar().prepareStatement("INSERT INTO opcion (pregunta_id,contenido,respuesta) VALUES (?,?,?)");
             pst.setInt(1,obj.getPreguntaId());
             pst.setString(2, obj.getContenido());
+            pst.setBoolean(3, obj.isRespuesta());
 
             if(pst.executeUpdate() > 0){
                 resp = true;
@@ -77,14 +76,17 @@ public class OpcionDAO implements CrudJuegoInterface<Opcion> {
         return resp;
     }
 
+    //UPDATE
     @Override
     public boolean actualizar(Opcion obj) {
 
         try{
 
-            pst = CON.conectar().prepareStatement("UPDATE opcion SET contenido = ? WHERE id = ?");
+            pst = CON.conectar().prepareStatement("UPDATE opcion SET contenido = ?, respuesta = ? WHERE id = ?");
             pst.setString(1, obj.getContenido());
-            pst.setInt(2, obj.getOpcionId());
+            pst.setBoolean(2,obj.isRespuesta());
+            pst.setInt(2, obj.getId());
+
 
             if(pst.executeUpdate() > 0){
                 resp = true;

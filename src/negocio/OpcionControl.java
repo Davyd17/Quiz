@@ -1,31 +1,30 @@
 package negocio;
 
-import datos.OpcionDAO;
+import datos.opciondao.OpcionCrud;
 import entidades.Opcion;
-import negocio.interfaces.ControlInterface;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpcionControl implements ControlInterface<Opcion> {
+public class OpcionControl {
 
-    private final OpcionDAO DATOS;
+    private final OpcionCrud DATOS;
     private Opcion opcion;
 
     public OpcionControl(){
-        DATOS = new OpcionDAO();
+        DATOS = new OpcionCrud();
     }
 
-    @Override
     public List<String> obtenerContenido(int id) {
 
         List<String> info = new ArrayList<>();
 
-        opcion = DATOS.mostrar(id);
+        opcion = DATOS.obtener(id);
 
         if(opcion != null){
 
-            info.add(Integer.toString(opcion.getOpcionId()));
+            info.add(Integer.toString(opcion.getId()));
             info.add(Integer.toString(opcion.getPreguntaId()));
             info.add(opcion.getContenido());
         }

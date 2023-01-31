@@ -1,11 +1,11 @@
-package datos;
+package datos.niveldao;
 
 /*
-Clase NivelDAO que se encargara de acceder a los datos del objeto nivel, esta a su vez implementa la interface CrudSimpleInterface
+Clase NivelCrud que se encargara de acceder a los datos del objeto nivel, esta a su vez implementa la interface InterfaceCrud
 que contiene la guia para realizar un crud simple al objeto
 */
 
-import datos.interfaces.CrudJuegoInterface;
+import datos.interfaces.InterfaceCrud;
 import entidades.Nivel;
 import database.Conexion;
 
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NivelDAO implements CrudJuegoInterface<Nivel> {
+public class NivelCrud implements InterfaceCrud<Nivel> {
 
     private final Conexion CON;
     private PreparedStatement pst;
@@ -24,14 +24,14 @@ public class NivelDAO implements CrudJuegoInterface<Nivel> {
     private boolean resp;
     private Nivel nivel;
 
-    public NivelDAO(){
+    public NivelCrud(){
         CON = Conexion.getInstance();
     }
 
     // Metodo que consulta los datos de un nivel en especifico
 
     @Override
-    public Nivel mostrar(int id){
+    public Nivel obtener(int id){
 
         try{
 
@@ -56,33 +56,6 @@ public class NivelDAO implements CrudJuegoInterface<Nivel> {
 
         return nivel;
 
-    }
-
-    @Override
-    public List<Nivel> listar() {
-        List<Nivel> registro = new ArrayList<>();
-
-        try {
-
-            pst = CON.conectar().prepareStatement("SELECT * FROM nivel");
-            rs = pst.executeQuery();
-
-            while(rs.next()){
-                registro.add(new Nivel(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4)));
-            }
-
-            pst.close();
-            rs.close();
-
-        } catch (SQLException e){
-            JOptionPane.showMessageDialog(null,e.getMessage());
-        } finally {
-            CON.desconectar();
-            pst = null;
-            rs = null;
-        }
-
-        return registro;
     }
 
     @Override
@@ -115,7 +88,7 @@ public class NivelDAO implements CrudJuegoInterface<Nivel> {
             pst.setString(1, obj.getCategoria());
             pst.setInt(2, obj.getPuntos());
             pst.setString(3, obj.getDificultad());
-            pst.setInt(4, obj.getNivelId());
+            pst.setInt(4, obj.getId());
 
             resp = pst.executeUpdate() > 0;
 

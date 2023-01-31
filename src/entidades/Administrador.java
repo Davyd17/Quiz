@@ -1,40 +1,37 @@
 package entidades;
 
-public class Administrador extends Usuario{
+// Entidad que mapea la tabla administrador de la base de datos
+public class Administrador {
 
-    private int adminId;
+    // Atributos
+    private int id;
+    private int usuarioId; //Foreign Key
 
-    public Administrador(){
+    //Constructor por defecto
+    public Administrador() {
 
     }
 
-    public Administrador(int adminId, int usuarioId){
-        this.adminId = adminId;
-        super.setUsuarioId(usuarioId);
+    //Constructor
+    public Administrador(int id, int usuarioId) {
+        this.id = id;
+        this.usuarioId = usuarioId;
     }
 
-    public Administrador(int usuarioId, int adminId, String nombreUsuario) {
-        super.setUsuarioId(usuarioId);
-        this.adminId = adminId;
-        this.setNombreUsuario(nombreUsuario);
+    //Getters & Setters
+    public int getId() {
+        return id;
     }
 
-
-    public int getAdminId() {
-        return adminId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setAdminId(int adminId) {
-        this.adminId = adminId;
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-
-    @Override
-    public String toString() {
-        return "Administrador{" +
-                "adminId=" + adminId +
-                ", nombreUsuario" + super.getNombreUsuario() +
-                ", usuarioId=" + super.getUsuarioId() +
-                '}';
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

@@ -3,10 +3,7 @@ package presentacion;
 import negocio.UsuarioControl;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 
 public class RegistroJugador extends  javax.swing.JFrame{
@@ -19,7 +16,12 @@ public class RegistroJugador extends  javax.swing.JFrame{
     private JButton btnRegistro;
     private JLabel lblVolver;
     private JLabel lblRegistroExistoso;
+    private JLabel lblClaveAdmin;
+    private JTextField textField1;
+    private JLabel lblRegistroAdmin;
     private UsuarioControl usuarioControl;
+    private String claveAdmin;
+    private static short rol;
 
     public RegistroJugador(){
         super("Registro");
@@ -27,6 +29,8 @@ public class RegistroJugador extends  javax.swing.JFrame{
         this.setContentPane(pnlRegistroJ);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.lblRegistroExistoso.setVisible(false);
+        lblRegistroAdmin.setText("¿Administrador?");
+        rol = 2;
 
     }
 
@@ -51,13 +55,43 @@ public class RegistroJugador extends  javax.swing.JFrame{
                 btnRegistroActionPerformed(e);
             }
         });
+
+        lblRegistroAdmin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                lblRegistroAdminActionPerformed(e);
+            }
+        });
+
+    }
+
+    private void lblRegistroAdminActionPerformed(MouseEvent e){
+
+        short count = 3;
+
+        do{
+
+            claveAdmin = JOptionPane.showInputDialog("Ingrese clave de administrador");
+
+            if(!claveAdmin.equals("746")){
+                count -= 1;
+                JOptionPane.showMessageDialog(this, "Clave incorrrecta, tiene " + count + " intentos");
+                if(count == 0) break;
+            } else{
+                rol = 1;
+                lblRegistroAdmin.setText("Registro de administrador");
+            }
+
+        } while(!claveAdmin.equals("746"));
+
     }
 
     private void btnRegistroActionPerformed(ActionEvent e){
 
         usuarioControl = new UsuarioControl();
 
-        String result = usuarioControl.registrar(txtNombreUsuario.getText(),txtContrasena.getText(),2);
+
+        String result = usuarioControl.registrar(txtNombreUsuario.getText(),txtContrasena.getText(),rol);
 
         if (result.equals("OK")){
             lblRegistroExistoso.setVisible(true);

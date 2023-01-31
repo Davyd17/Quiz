@@ -1,7 +1,7 @@
-package datos;
+package datos.preguntadao;
 
 import database.Conexion;
-import datos.interfaces.CrudJuegoInterface;
+import datos.interfaces.InterfaceCrud;
 import entidades.Pregunta;
 
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class PreguntaDAO implements CrudJuegoInterface<Pregunta> {
+public class PreguntaCrud implements InterfaceCrud<Pregunta> {
 
     private final Conexion CON;
     private PreparedStatement pst;
@@ -18,14 +18,14 @@ public class PreguntaDAO implements CrudJuegoInterface<Pregunta> {
     private boolean resp;
     private Pregunta pregunta;
 
-    public PreguntaDAO(){
+    public PreguntaCrud(){
         CON = Conexion.getInstance();
         resp = false;
     }
 
 
     @Override
-    public Pregunta mostrar(int id) {
+    public Pregunta obtener(int id) {
 
         try{
 
@@ -49,11 +49,6 @@ public class PreguntaDAO implements CrudJuegoInterface<Pregunta> {
         }
 
         return pregunta;
-    }
-
-    @Override
-    public List<Pregunta> listar() {
-        return null;
     }
 
     @Override
@@ -87,7 +82,7 @@ public class PreguntaDAO implements CrudJuegoInterface<Pregunta> {
 
             pst = CON.conectar().prepareStatement("UPDATE pregunta set contenido = ? where id = ?");
             pst.setString(1, obj.getContenido());
-            pst.setInt(2, obj.getPreguntaId());
+            pst.setInt(2, obj.getId());
 
             if(pst.executeUpdate() > 0){
                 resp = true;

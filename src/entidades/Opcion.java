@@ -1,26 +1,34 @@
 package entidades;
 
+//Entidad que mapea la tabla opcion de la base de datos
 public class Opcion {
 
-    private int opcionId;
-    private int preguntaId;
+    // Atributos
+    private int id;
+    private int preguntaId;//Foreign Key
     private String contenido;
 
+    private boolean respuesta;
+
+    // Contructor por defecto
     public Opcion() {
     }
 
-    public Opcion(int opcionId, int preguntaId, String contenido) {
-        this.opcionId = opcionId;
+    // Constructor
+    public Opcion(int id, int preguntaId, String contenido, boolean respuesta) {
+        this.id = id;
         this.preguntaId = preguntaId;
         this.contenido = contenido;
+        this.respuesta = respuesta;
+    }
+    
+    // Getters & Setters
+    public int getId() {
+        return id;
     }
 
-    public int getOpcionId() {
-        return opcionId;
-    }
-
-    public void setOpcionId(int opcionId) {
-        this.opcionId = opcionId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getPreguntaId() {
@@ -37,5 +45,13 @@ public class Opcion {
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
+    }
+
+    public boolean isRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(boolean respuesta) {
+        this.respuesta = respuesta;
     }
 }

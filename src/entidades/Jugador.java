@@ -1,38 +1,41 @@
 package entidades;
 
-public class Jugador extends Usuario{
+//Entidad que mapea la tabla jugador de la base de datos
+public class Jugador{
 
-    // Error al sobreescribir la variable, eliminarla y llamar al metodo super en el contructor
-    private int jugadorId;
+    // Atributos
+    private int id;
+    private int usuarioId; //Foreign Key
     private int nivelId;
     private int puntosAcumulados;
 
+    // Constructor por defecto
     public Jugador() {
     }
 
-    public Jugador(int jugadorId, int usuarioId, int nivelId, int puntosAcumulados) {
-        this.jugadorId = jugadorId;
-        this.setUsuarioId(usuarioId);
+    // Constructor
+    public Jugador(int id, int usuarioId, int nivelId, int puntosAcumulados) {
+        this.id = id;
+        this.usuarioId = usuarioId;
         this.nivelId = nivelId;
         this.puntosAcumulados = puntosAcumulados;
     }
 
-    public Jugador(int usuarioId, int jugadorId, String nombreUsuario,  int nivelId, int puntosAcumulados) {
-        super.setUsuarioId(usuarioId);
-        super.setNombreUsuario(nombreUsuario);
-        this.jugadorId = jugadorId;
-        this.nivelId = nivelId;
-        this.puntosAcumulados = puntosAcumulados;
+    // Getters & Setters
+    public int getId() {
+        return id;
     }
 
-
-
-    public int getRol() {
-        return jugadorId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setRol(int rol) {
-        this.jugadorId = rol;
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public int getNivelId() {
@@ -49,25 +52,6 @@ public class Jugador extends Usuario{
 
     public void setPuntosAcumulados(int puntosAcumulados) {
         this.puntosAcumulados = puntosAcumulados;
-    }
-
-    public int getJugadorId() {
-        return jugadorId;
-    }
-
-    public void setJugadorId(int jugadorId) {
-        this.jugadorId = jugadorId;
-    }
-
-    @Override
-    public String toString() {
-        return "Jugador{" +
-                "jugadorId = " + jugadorId +
-                ", usuarioId = " + super.getUsuarioId() +
-                ", nombreUsuario = " + super.getNombreUsuario() +
-                ", nivelId = " + nivelId +
-                ", puntosAcumulados = " + puntosAcumulados +
-                '}';
     }
 }
 

@@ -1,21 +1,21 @@
 package mapper;
 
 import entidades.Nivel;
-import transferobject.JuegoDTO;
-import transferobject.NivelDTO;
+import transferobject.PreguntaDto;
+import transferobject.NivelDto;
 
 import java.util.ArrayList;
 
 public class NivelMapper {
 
-    public NivelDTO CreateDTO(Nivel entidad){
+    public NivelDto CreateDTO(Nivel entidad){
 
-        NivelDTO nivelDTO = new NivelDTO();
+        NivelDto nivelDTO = new NivelDto();
 
             nivelDTO.setCategoria(entidad.getCategoria());
             nivelDTO.setDificultad(entidad.getDificultad());
             nivelDTO.setPuntos(entidad.getPuntos());
-            nivelDTO.setPreguntas(new ArrayList<JuegoDTO>());
+            nivelDTO.setPreguntas(new ArrayList<PreguntaDto>());
 
             return nivelDTO;
     }

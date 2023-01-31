@@ -1,32 +1,35 @@
 package entidades;
 
-// Entidad Nivel, donde solo se podra editar el nombre de la categoria, de modo que el resto de atributos
-// estan definidos por defecto
+// Entidad que mapea la tabla nivel de la base de datos
 
 public class Nivel {
 
-    private int nivelId;
+    // Atributos
+    private int id;
     private String categoria;
     private int puntos;
     private String dificultad;
 
+    // Constructor por defecto
     public Nivel() {
 
     }
 
-    public Nivel(int nivelId, String categoria, int puntos, String dificultad) {
-        this.nivelId = nivelId;
+    // Constructor
+    public Nivel(int id, String categoria, int puntos, String dificultad) {
+        this.id = id;
         this.categoria = categoria;
         this.puntos = puntos;
         this.dificultad = dificultad;
     }
 
-    public int getNivelId() {
-        return nivelId;
+    // Getters & Setters
+    public int getId() {
+        return id;
     }
 
-    public void setNivelId(int nivelId) {
-        this.nivelId = nivelId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCategoria() {
@@ -52,4 +55,5 @@ public class Nivel {
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
     }
+
 }

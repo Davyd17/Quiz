@@ -3,17 +3,17 @@ package transferobject;
 import java.util.ArrayList;
 import entidades.Opcion;
 
-public class PreguntaDTO {
+public class PreguntaDto {
 
     private int nivelId;
     private int preguntaId;
     private String contenido;
     private ArrayList<Opcion> Opciones = new ArrayList<>();
 
-    public PreguntaDTO() {
+    public PreguntaDto() {
     }
 
-    public PreguntaDTO(int nivelId, int preguntaId, String contenido, ArrayList<Opcion> opciones) {
+    public PreguntaDto(int nivelId, int preguntaId, String contenido, ArrayList<Opcion> opciones) {
         this.nivelId = nivelId;
         this.preguntaId = preguntaId;
         this.contenido = contenido;
