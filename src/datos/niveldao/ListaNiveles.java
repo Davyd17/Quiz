@@ -1,2 +1,4 @@
-package datos.niveldao;public class ListaNiveles {
+package datos.niveldao;
+
+public class ListaNiveles {
 }
