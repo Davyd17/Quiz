@@ -2,12 +2,15 @@ package datos.opciondao;
 
 import database.Conexion;
 import datos.interfaces.InterfaceCrud;
+import datos.usuariodao.UsuarioCrud;
 import entidades.Opcion;
+import entidades.Usuario;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OpcionCrud implements InterfaceCrud<Opcion> {
@@ -48,6 +51,36 @@ public class OpcionCrud implements InterfaceCrud<Opcion> {
             rs = null;
         }
         return opcion;
+    }
+
+    @Override
+    public List<Opcion> listar() {
+
+        List<Opcion> registros = new ArrayList<>();
+
+        String sql = "SELECT * FROM opcion";
+
+        try {
+
+            pst = CON.conectar().prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()){
+                registros.add(new Opcion(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getBoolean(4)));
+            }
+
+            pst.close();
+            rs.close();
+
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+        return registros;
     }
 
     //CREATE

@@ -6,12 +6,13 @@ import datos.interfaces.InterfaceCrud;
 import database.Conexion;
 import entidades.Administrador;
 import entidades.Jugador;
+import entidades.Pregunta;
 import entidades.Usuario;
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 // Clase en la que se implementa el patron DAO para acceder a los datos de la entidad Usuario.
 
@@ -118,6 +119,40 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
             pst = null;
         }
         return usuario;
+    }
+
+    //READ
+    // Metodo que se encarga de retornar una lista con todos los registros de la tabla usuario
+    @Override
+    public List<Usuario> listar() {
+
+
+        List<Usuario> registros = new ArrayList<>();
+
+        String sql = "SELECT * FROM usuario";
+
+        try {
+
+            pst = CON.conectar().prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()){
+                registros.add(new Usuario(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4)));
+            }
+
+            pst.close();
+            rs.close();
+
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+
+        return registros;
     }
 
     //UPDATE

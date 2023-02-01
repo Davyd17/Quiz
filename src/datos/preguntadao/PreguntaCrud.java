@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PreguntaCrud implements InterfaceCrud<Pregunta> {
@@ -49,6 +50,37 @@ public class PreguntaCrud implements InterfaceCrud<Pregunta> {
         }
 
         return pregunta;
+    }
+
+    @Override
+    public List<Pregunta> listar() {
+
+        List<Pregunta> registros = new ArrayList<>();
+
+        String sql = "SELECT * FROM pregunta";
+
+        try {
+
+            pst = CON.conectar().prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()){
+                registros.add(new Pregunta(rs.getInt(1),rs.getInt(2),rs.getString(3)));
+            }
+
+            pst.close();
+            rs.close();
+
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+
+        return registros;
     }
 
     @Override

@@ -3,11 +3,14 @@ package datos.jugadordao;
 import database.Conexion;
 import datos.interfaces.InterfaceCrud;
 import entidades.Jugador;
+import entidades.Opcion;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JugadorCrud implements InterfaceCrud<Jugador>{
 
@@ -76,6 +79,36 @@ public class JugadorCrud implements InterfaceCrud<Jugador>{
         }
 
         return jugador;
+    }
+
+    @Override
+    public List<Jugador> listar() {
+
+        List<Jugador> registros = new ArrayList<>();
+
+        String sql = "SELECT * FROM jugador";
+
+        try {
+
+            pst = CON.conectar().prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()){
+                registros.add(new Jugador(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4)));
+            }
+
+            pst.close();
+            rs.close();
+
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+        return registros;
     }
 
     // UPDATE

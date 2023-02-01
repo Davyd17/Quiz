@@ -8,6 +8,7 @@ que contiene la guia para realizar un crud simple al objeto
 import datos.interfaces.InterfaceCrud;
 import entidades.Nivel;
 import database.Conexion;
+import entidades.Opcion;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
@@ -56,6 +57,36 @@ public class NivelCrud implements InterfaceCrud<Nivel> {
 
         return nivel;
 
+    }
+
+    @Override
+    public List<Nivel> listar() {
+
+        List<Nivel> registros = new ArrayList<>();
+
+        String sql = "SELECT * FROM nivel";
+
+        try {
+
+            pst = CON.conectar().prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()){
+                registros.add(new Nivel(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4)));
+            }
+
+            pst.close();
+            rs.close();
+
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+        return registros;
     }
 
     @Override
