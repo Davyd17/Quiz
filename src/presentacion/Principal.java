@@ -57,8 +57,6 @@ public class Principal extends JFrame{
 
         if(usuarioDto != null) {
 
-            System.out.println(usuarioDto);
-
             try {
                 if (Class.forName("transferobject.AdminDto").isInstance(usuarioDto)) {
 
