@@ -8,7 +8,7 @@ public class InterfazAdministrador extends JFrame{
     private JLabel label;
 
     public InterfazAdministrador(){
-        super("Registro");
+        super("Interfaz administrador");
         this.setContentPane(pnlAdmin);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createUIComponents();
