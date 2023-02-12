@@ -7,3 +7,7 @@
 Quiz.iml
 mysql_connector/
 out/
+nbproject/
+build.xml
+manifest.mf
+lib/
