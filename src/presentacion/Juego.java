@@ -1,13 +1,14 @@
 package presentacion;
 
-import entidades.Nivel;
 import negocio.NivelControl;
-import transferobject.JugadorDto;
-import transferobject.UsuarioDto;
+import transferobject.NivelDto;
+
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
+
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import static presentacion.Principal.jugadorDto;
 
@@ -18,12 +19,14 @@ public class Juego extends JFrame{
     private JLabel lblPuntos;
     private JLabel lblCategoria;
     private JLabel lblTituloCategoria;
+    private JLabel lblCerrarSesion;
 
     public Juego(){
         super("Quiz Game");
         this.setContentPane(pnlJuego);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.createUIComponents();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -34,19 +37,34 @@ public class Juego extends JFrame{
 
         this.infoLabel();
 
+        lblCerrarSesion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setLblCerrarSesion();
+            }
+        });
+
     }
 
     private void infoLabel(){
-
+/*
         lblUsuario.setText(jugadorDto.getNombreUsuario());
 
         lblNivel.setText("NIVEL: " + (jugadorDto.getNivelId()));
 
-        Nivel nivel = new NivelControl().obtenerNivel(jugadorDto.getNivelId());
+        NivelDto nivel = new NivelControl().obtener(jugadorDto.getNivelId());
         lblCategoria.setText((nivel.getCategoria()));
         lblPuntos.setText("Puntos: " + nivel.getPuntos());
 
+*/
+    }
 
+    private void setLblCerrarSesion(){
+
+        jugadorDto = null;
+        this.dispose();
+        Principal principal = new Principal();
+        principal.setVisible(true);
     }
 
 }

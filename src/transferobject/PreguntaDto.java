@@ -5,27 +5,17 @@ import entidades.Opcion;
 
 public class PreguntaDto {
 
-    private int nivelId;
     private int preguntaId;
     private String contenido;
-    private ArrayList<Opcion> Opciones = new ArrayList<>();
+    private ArrayList<Opcion> opciones = new ArrayList<>();
 
     public PreguntaDto() {
     }
 
-    public PreguntaDto(int nivelId, int preguntaId, String contenido, ArrayList<Opcion> opciones) {
-        this.nivelId = nivelId;
+    public PreguntaDto(int preguntaId, String contenido, ArrayList<Opcion> opciones) {
         this.preguntaId = preguntaId;
         this.contenido = contenido;
-        Opciones = opciones;
-    }
-
-    public int getNivelId() {
-        return nivelId;
-    }
-
-    public void setNivelId(int nivelId) {
-        this.nivelId = nivelId;
+        this.opciones.addAll(opciones);
     }
 
     public int getPreguntaId() {
@@ -45,10 +35,19 @@ public class PreguntaDto {
     }
 
     public ArrayList<Opcion> getOpciones() {
-        return Opciones;
+        return opciones;
     }
 
     public void setOpciones(ArrayList<Opcion> opciones) {
-        Opciones = opciones;
+        opciones = opciones;
+    }
+
+    @Override
+    public String toString() {
+        return "PreguntaDto{" +
+                "preguntaId=" + preguntaId +
+                ", contenido='" + contenido + '\'' +
+                ", opciones=" + opciones +
+                '}';
     }
 }

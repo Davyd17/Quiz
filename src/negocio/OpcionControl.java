@@ -1,34 +1,45 @@
 package negocio;
 
-import datos.opciondao.OpcionCrud;
+import datos.mysql.MySQLOpcionDAO;
 import entidades.Opcion;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpcionControl {
 
-    private final OpcionCrud DATOS;
-    private Opcion opcion;
+    private final MySQLOpcionDAO DATOS;
+    private Opcion entidad;
+    private boolean resp;
 
     public OpcionControl(){
-        DATOS = new OpcionCrud();
+        DATOS = new MySQLOpcionDAO();
     }
 
-    public List<String> obtenerContenido(int id) {
+    public ArrayList<Opcion> obtenerListaPorPregunta(int preguntaId) {
 
-        List<String> info = new ArrayList<>();
+        ArrayList<Opcion> registros = DATOS.ObtenerListaPorPregunta(preguntaId);
 
-        opcion = DATOS.obtener(id);
+        if(registros.isEmpty()){
 
-        if(opcion != null){
-
-            info.add(Integer.toString(opcion.getId()));
-            info.add(Integer.toString(opcion.getPreguntaId()));
-            info.add(opcion.getContenido());
+            JOptionPane.showMessageDialog(null, "Hubo un error al obtener las opciones");
         }
 
-        return info;
+        return registros;
+
+    }
+
+    public boolean insertar(int preguntaId, String contenido, Boolean respuesta){
+
+        entidad = new Opcion();
+        entidad.setPreguntaId(preguntaId);
+        entidad.setContenido(contenido);
+        entidad.setRespuesta(respuesta);
+
+        resp = DATOS.insertar(entidad);
+
+        return resp;
     }
 }

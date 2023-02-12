@@ -54,4 +54,14 @@ public class Opcion {
     public void setRespuesta(boolean respuesta) {
         this.respuesta = respuesta;
     }
+
+    @Override
+    public String toString() {
+        return "Opcion{" +
+                "id=" + id +
+                ", preguntaId=" + preguntaId +
+                ", contenido='" + contenido + '\'' +
+                ", respuesta=" + respuesta +
+                '}';
+    }
 }

@@ -1,12 +1,9 @@
-package datos.usuariodao;
+package datos.mysql;
 
-import datos.administradordao.AdministradorCrud;
-import datos.jugadordao.JugadorCrud;
-import datos.interfaces.InterfaceCrud;
-import database.Conexion;
+import database.ConexionMySQL;
+import datos.interfaces.mysql.UsuarioDAO;
 import entidades.Administrador;
 import entidades.Jugador;
-import entidades.Pregunta;
 import entidades.Usuario;
 
 import javax.swing.*;
@@ -16,17 +13,18 @@ import java.util.List;
 
 // Clase en la que se implementa el patron DAO para acceder a los datos de la entidad Usuario.
 
-// Se implementa la interface InterfaceCrud, esta brinda los metodos para realizar un CRUD simple.
+// Se implementa la interface InterfaceCrudForeignKey, esta brinda los metodos para realizar un CRUD simple.
 
-public class UsuarioCrud implements InterfaceCrud<Usuario> {
+public class MySQLUsuarioDAO implements UsuarioDAO {
 
-    private final Conexion CON;
+    private final ConexionMySQL CON;
     private PreparedStatement pst;
     private ResultSet rs;
-    private boolean resp; //Variable que almacena la respuesta de la operacion
+    private Usuario entidad;
+    private boolean resp;  //Variable que almacena la respuesta de la operacion
 
-    public UsuarioCrud() {
-        CON = Conexion.getInstance(); // Se inicializa la variable CON responsable de obtener la instancia para obtener la conexion con la base de datos.
+    public MySQLUsuarioDAO() {
+        CON = ConexionMySQL.getInstance(); // Se inicializa la variable CON responsable de obtener la instancia para obtener la conexion con la base de datos.
     }
 
 
@@ -37,9 +35,11 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
         int idGenerado = 0;
         int filasAfectadas = 0;
 
+        String sql = "INSERT INTO usuario (nombre_usuario,contraseña,rol) VALUES(?,?,?)";
+
         try {
 
-            pst = CON.conectar().prepareStatement("INSERT INTO usuario (nombre_usuario,contraseña,rol) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            pst = CON.conectar().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, obj.getNombreUsuario());
             pst.setString(2, obj.getContrasena());
             pst.setInt(3, obj.getRol());
@@ -73,7 +73,7 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
                 Administrador administrador = new Administrador();
                 administrador.setUsuarioId(idGenerado);
 
-                AdministradorCrud datos = new AdministradorCrud();
+                MySQLAdministradorDAO datos = new MySQLAdministradorDAO();
                 resp = datos.insertar(administrador);
 
             } else if(obj.getRol() == 2){
@@ -83,7 +83,7 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
                 jugador.setNivelId(1);
                 jugador.setPuntosAcumulados(0);
 
-                JugadorCrud datos = new JugadorCrud();
+                MySQLJugadorDAO datos = new MySQLJugadorDAO();
                 resp = datos.insertar(jugador);
             }
         }
@@ -124,7 +124,7 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
     //READ
     // Metodo que se encarga de retornar una lista con todos los registros de la tabla usuario
     @Override
-    public List<Usuario> listar() {
+    public List<Usuario> obtenerTodos() {
 
 
         List<Usuario> registros = new ArrayList<>();
@@ -159,9 +159,11 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
     @Override
     public boolean actualizar(Usuario obj) {
 
+        String sql = "UPDATE usuario set usuario_id = ?, nombre_usuario = ?, contraseña = ?, rol_id = ? WHERE usuario_id = ?";
+
         try{
 
-            pst = CON.conectar().prepareStatement("UPDATE usuario set usuario_id = ?, nombre_usuario = ?, contraseña = ?, rol_id = ? WHERE usuario_id = ?");
+            pst = CON.conectar().prepareStatement(sql);
 
             pst.setInt(1, obj.getId());
             pst.setString(2, obj.getNombreUsuario());
@@ -179,6 +181,63 @@ public class UsuarioCrud implements InterfaceCrud<Usuario> {
             JOptionPane.showMessageDialog(null,e.getMessage());
         } finally {
             CON.desconectar();
+            pst = null;
+        }
+
+        return resp;
+    }
+
+    @Override
+    public boolean eliminar() {
+        return false;
+    }
+
+    // METODOS ADICIONALES
+    @Override
+    public Usuario iniciarSesion(String nombreUsuario, String contrasena) {
+
+
+        String sql = "SELECT * FROM usuario WHERE nombre_usuario = ? and contraseña = ?";
+
+        try{
+            pst = CON.conectar().prepareStatement(sql);
+            pst.setString(1,nombreUsuario);
+            pst.setString(2,contrasena);
+            rs = pst.executeQuery();
+
+            if(rs.next()) entidad = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4));
+
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            pst = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return entidad;
+    }
+
+    @Override
+    public boolean existe(String texto) {
+
+        String sql = "SELECT nombre_usuario FROM usuario WHERE nombre_usuario = ?";
+
+        try{
+
+            pst = CON.conectar().prepareStatement(sql);
+            pst.setString(1, texto);
+            rs = pst.executeQuery();
+
+            resp = rs.next();
+
+            pst.close();
+            rs.close();
+
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
             pst = null;
         }
 

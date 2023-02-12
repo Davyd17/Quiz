@@ -69,20 +69,26 @@ public class RegistroJugador extends  javax.swing.JFrame{
 
         short count = 3;
 
-        do{
+        try {
 
-            claveAdmin = JOptionPane.showInputDialog("Ingrese clave de administrador");
+            do {
 
-            if(!claveAdmin.equals("746")){
-                count -= 1;
-                JOptionPane.showMessageDialog(this, "Clave incorrrecta, tiene " + count + " intentos");
-                if(count == 0) break;
-            } else{
-                rol = 1;
-                lblRegistroAdmin.setText("Registro de administrador");
-            }
+                claveAdmin = JOptionPane.showInputDialog("Ingrese clave de administrador");
 
-        } while(!claveAdmin.equals("746"));
+                if (!claveAdmin.equals("746")) {
+                    count -= 1;
+                    JOptionPane.showMessageDialog(this, "Clave incorrrecta, tiene " + count + " intentos");
+                    if (count == 0) break;
+                } else {
+                    rol = 1;
+                    lblRegistroAdmin.setText("Registro de administrador");
+                }
+
+            } while (!claveAdmin.equals("746"));
+
+        } catch(Exception exception){
+           return;
+        }
 
     }
 

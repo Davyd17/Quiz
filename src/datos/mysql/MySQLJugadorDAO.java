@@ -1,26 +1,25 @@
-package datos.jugadordao;
+package datos.mysql;
 
-import database.Conexion;
-import datos.interfaces.InterfaceCrud;
+import database.ConexionMySQL;
+import datos.interfaces.mysql.JugadorDAO;
 import entidades.Jugador;
-import entidades.Opcion;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class JugadorCrud implements InterfaceCrud<Jugador>{
+public class MySQLJugadorDAO implements JugadorDAO {
 
-    private final Conexion CON;
+    private final ConexionMySQL CON;
     private PreparedStatement pst;
     private ResultSet rs;
     private boolean resp;
+    private Jugador entidad;
 
-    public JugadorCrud() {
-        CON = Conexion.getInstance();
+    public MySQLJugadorDAO() {
+        CON = ConexionMySQL.getInstance();
     }
 
     // CREATE
@@ -54,9 +53,7 @@ public class JugadorCrud implements InterfaceCrud<Jugador>{
     @Override
     public Jugador obtener(int id) {
 
-        Jugador jugador = null;
-
-        String sql = "SELECT * FROM jugador WHERE usuario_id = ?";
+        String sql = "SELECT * FROM jugador WHERE id = ?";
 
         try{
             pst = CON.conectar().prepareStatement(sql);
@@ -64,7 +61,7 @@ public class JugadorCrud implements InterfaceCrud<Jugador>{
             rs = pst.executeQuery();
 
             if (rs.next()){
-                jugador = new Jugador(rs.getInt(1),rs.getInt(2), rs.getInt(3),rs.getInt(4));
+                entidad = new Jugador(rs.getInt(1),rs.getInt(2), rs.getInt(3),rs.getInt(4));
             }
 
             pst.close();
@@ -78,37 +75,13 @@ public class JugadorCrud implements InterfaceCrud<Jugador>{
             rs = null;
         }
 
-        return jugador;
+        return entidad;
     }
 
     @Override
-    public List<Jugador> listar() {
+    public List<Jugador> obtenerTodos() {
 
-        List<Jugador> registros = new ArrayList<>();
-
-        String sql = "SELECT * FROM jugador";
-
-        try {
-
-            pst = CON.conectar().prepareStatement(sql);
-            rs = pst.executeQuery();
-
-            while (rs.next()){
-                registros.add(new Jugador(rs.getInt(1),rs.getInt(2),rs.getInt(3),rs.getInt(4)));
-            }
-
-            pst.close();
-            rs.close();
-
-
-        }catch (SQLException e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            CON.desconectar();
-            rs = null;
-            pst = null;
-        }
-        return registros;
+        return null;
     }
 
     // UPDATE
@@ -138,5 +111,38 @@ public class JugadorCrud implements InterfaceCrud<Jugador>{
             pst = null;
         }
         return resp;
+    }
+
+    @Override
+    public boolean eliminar() {
+        return false;
+    }
+
+    @Override
+    public Jugador obtenerPorUsuario(int usuarioId) {
+
+        String sql = "SELECT * FROM jugador WHERE usuario_id = ?";
+
+        try{
+            pst = CON.conectar().prepareStatement(sql);
+            pst.setInt(1, usuarioId);
+            rs = pst.executeQuery();
+
+            if (rs.next()){
+                entidad = new Jugador(rs.getInt(1),rs.getInt(2), rs.getInt(3),rs.getInt(4));
+            }
+
+            pst.close();
+            rs.close();
+
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            pst = null;
+            rs = null;
+        }
+
+        return entidad;
     }
 }

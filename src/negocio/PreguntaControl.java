@@ -1,35 +1,55 @@
 package negocio;
 
-
-import datos.preguntadao.PreguntaCrud;
+import datos.mysql.MySQLPreguntaDAO;
 import entidades.Pregunta;
+import mapper.PreguntaMapper;
+import transferobject.PreguntaDto;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PreguntaControl {
 
-    private final PreguntaCrud DATOS;
-    private Pregunta pregunta;
+    private final MySQLPreguntaDAO DATOS;
+    private Pregunta entidad;
+    private boolean resp;
 
-    public PreguntaControl(){
-        DATOS = new PreguntaCrud();
-
+    public PreguntaControl() {
+        DATOS = new MySQLPreguntaDAO();
     }
 
-    public List<String> obtenerContenido(int id){
+    public ArrayList<PreguntaDto> obtenerListaPorNivel(int nivelId){
 
-        List<String> info = new ArrayList<>();
+        ArrayList<Pregunta> registros = DATOS.obtenerListaPorNivel(nivelId);
+        ArrayList<PreguntaDto> preguntaDtoList = new ArrayList<>();
 
-        pregunta = DATOS.obtener(id);
+        for(Pregunta entidad : registros){
 
-        if(pregunta != null){
-            info.add(Integer.toString(pregunta.getId()));
-            info.add(Integer.toString(pregunta.getNivelId()));
-            info.add(pregunta.getContenido());
+            PreguntaDto preguntaDto = new PreguntaMapper().CreateDto(entidad, new OpcionControl().obtenerListaPorPregunta(entidad.getId()));
+
+            if(preguntaDto != null){
+                preguntaDtoList.add(preguntaDto);
+            } else {
+                JOptionPane.showMessageDialog(null, "Hubo un error al obtener la pregunta");
+            }
         }
 
-        return info;
+        return  preguntaDtoList;
     }
+
+    public boolean insertar(int nivelId, String contenido){
+
+        entidad = new Pregunta();
+        entidad.setNivelId(nivelId);
+        entidad.setContenido(contenido);
+
+         resp = DATOS.insertar(entidad);
+
+        return resp;
+
+    }
+
+
+
 }

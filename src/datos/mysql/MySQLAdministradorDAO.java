@@ -1,31 +1,30 @@
-package datos.administradordao;
+package datos.mysql;
 
-import database.Conexion;
-import datos.interfaces.InterfaceCrud;
+import database.ConexionMySQL;
+import datos.interfaces.mysql.AdministradorDAO;
 import entidades.Administrador;
-import entidades.Opcion;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /*
-Clase que implementa el patron DAO para acceder a los datos de la entidad administrador. Implementa la interface InterfaceCrud
+Clase que implementa el patron DAO para acceder a los datos de la entidad administrador. Implementa la interface InterfaceCrudForeignKey
 esta brinda la guia para realizar el CRUD en la BD
  */
 
-public class AdministradorCrud implements InterfaceCrud<Administrador> {
+public class MySQLAdministradorDAO implements AdministradorDAO {
 
-    private final Conexion CON;
+    private final ConexionMySQL CON;
     private PreparedStatement pst;
     private ResultSet rs;
     private boolean resp;
+    private Administrador entidad;
 
-    public AdministradorCrud(){
-        CON = Conexion.getInstance();
+    public MySQLAdministradorDAO(){
+        CON = ConexionMySQL.getInstance();
     }
 
     // Create
@@ -56,10 +55,7 @@ public class AdministradorCrud implements InterfaceCrud<Administrador> {
     @Override
     public Administrador obtener(int id) {
 
-
-        Administrador administrador = null;
-
-        String sql = "SELECT * FROM administrador WHERE usuario_id = ?";
+        String sql = "SELECT * FROM administrador WHERE id = ?";
 
         try{
             pst = CON.conectar().prepareStatement(sql);
@@ -67,7 +63,7 @@ public class AdministradorCrud implements InterfaceCrud<Administrador> {
             rs = pst.executeQuery();
 
             if (rs.next()){
-                administrador = new Administrador(rs.getInt(1),rs.getInt(2));
+                entidad = new Administrador(rs.getInt(1),rs.getInt(2));
             }
 
             pst.close();
@@ -81,37 +77,12 @@ public class AdministradorCrud implements InterfaceCrud<Administrador> {
             rs = null;
         }
 
-        return administrador;
+        return entidad;
     }
 
     @Override
-    public List<Administrador> listar() {
-
-        List<Administrador> registros = new ArrayList<>();
-
-        String sql = "SELECT * FROM administrador";
-
-        try {
-
-            pst = CON.conectar().prepareStatement(sql);
-            rs = pst.executeQuery();
-
-            while (rs.next()){
-                registros.add(new Administrador(rs.getInt(1),rs.getInt(2)));
-            }
-
-            pst.close();
-            rs.close();
-
-
-        }catch (SQLException e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            CON.desconectar();
-            rs = null;
-            pst = null;
-        }
-        return registros;
+    public List<Administrador> obtenerTodos() {
+        return null;
     }
 
     // UPDATE (Sin uso definido ya que por ahora solo cuenta con una foreign key ).
@@ -121,4 +92,37 @@ public class AdministradorCrud implements InterfaceCrud<Administrador> {
         return false;
     }
 
+    @Override
+    public boolean eliminar() {
+        return false;
+    }
+
+
+    @Override
+    public Administrador obtenerPorUsuario(int usuarioId) {
+
+        String sql = "SELECT * FROM administrador WHERE usuario_id = ?";
+
+        try{
+            pst = CON.conectar().prepareStatement(sql);
+            pst.setInt(1, usuarioId);
+            rs = pst.executeQuery();
+
+            if (rs.next()){
+                entidad = new Administrador(rs.getInt(1),rs.getInt(2));
+            }
+
+            pst.close();
+            rs.close();
+
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            pst = null;
+            rs = null;
+        }
+
+        return entidad;
+    }
 }

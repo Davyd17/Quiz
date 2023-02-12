@@ -60,4 +60,15 @@ public class NivelDto {
     public void setPreguntas(ArrayList<PreguntaDto> preguntas) {
         this.preguntas = preguntas;
     }
+
+    @Override
+    public String toString() {
+        return "NivelDto{" +
+                "nivelId=" + nivelId +
+                ", categoria='" + categoria + '\'' +
+                ", puntos=" + puntos +
+                ", dificultad='" + dificultad + '\'' +
+                ", preguntas=" + preguntas +
+                '}';
+    }
 }

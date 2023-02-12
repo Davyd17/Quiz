@@ -1,37 +1,31 @@
 package negocio;
 
-import datos.administradordao.AdministradorCrud;
-import datos.jugadordao.JugadorCrud;
-import datos.usuariodao.ExistenciaUsuario;
-import datos.usuariodao.UsuarioCrud;
-import datos.usuariodao.UsuarioInicioSesion;
+import datos.mysql.MySQLAdministradorDAO;
+import datos.mysql.MySQLJugadorDAO;
+import datos.mysql.MySQLUsuarioDAO;
 import entidades.Administrador;
 import entidades.Jugador;
 import entidades.Usuario;
 import mapper.AdminMapper;
 import mapper.JugadorMapper;
-import transferobject.AdminDto;
-import transferobject.JugadorDto;
 import transferobject.UsuarioDto;
-
-import javax.swing.*;
 
 public class UsuarioControl {
 
-    private final UsuarioCrud DATOS;
+    private final MySQLUsuarioDAO DATOS;
     private Usuario usuario;
     private UsuarioDto usuarioDto;
 
     public UsuarioControl() {
-        DATOS = new UsuarioCrud();
+        DATOS = new MySQLUsuarioDAO();
         usuario = new Usuario();
     }
 
     public String registrar(String nombreUsuario, String contrasena, int rol) {
 
-        ExistenciaUsuario existencia = new ExistenciaUsuario();
+        MySQLUsuarioDAO existe = new MySQLUsuarioDAO();
 
-        if (existencia.encontrar(nombreUsuario)) {
+        if (existe.existe(nombreUsuario)) {
             return "El usuario ya existe";
         } else {
 
@@ -50,20 +44,18 @@ public class UsuarioControl {
 
     public UsuarioDto IniciarSesion(String nombreUsuario, String contrasena){
 
-        UsuarioInicioSesion logIn = new UsuarioInicioSesion();
-
-        this.usuario = logIn.iniciarSesion(nombreUsuario,contrasena);
+        this.usuario = new MySQLUsuarioDAO().iniciarSesion(nombreUsuario,contrasena);
 
         if(this.usuario != null){
             if(this.usuario.getRol() == 1){
 
-                Administrador administrador = new AdministradorCrud().obtener(this.usuario.getId());
+                Administrador administrador = new MySQLAdministradorDAO().obtenerPorUsuario(this.usuario.getId());
 
                 this.usuarioDto = new AdminMapper().CreateDTO(administrador,this.usuario);
 
             } else if (this.usuario.getRol() == 2) {
 
-                Jugador jugador = new JugadorCrud().obtener(this.usuario.getId());
+                Jugador jugador = new MySQLJugadorDAO().obtenerPorUsuario(this.usuario.getId());
 
                 this.usuarioDto = new JugadorMapper().CreateDTO(jugador, this.usuario);
             }
@@ -72,10 +64,5 @@ public class UsuarioControl {
         return usuarioDto;
     }
 
-    public static void main(String[] args) {
-
-        UsuarioControl usuarioControl = new UsuarioControl();
-        System.out.println(usuarioControl.registrar("prueba13","123",2));
-    }
 
 }

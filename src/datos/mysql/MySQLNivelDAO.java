@@ -1,14 +1,14 @@
-package datos.niveldao;
+package datos.mysql;
 
 /*
-Clase NivelCrud que se encargara de acceder a los datos del objeto nivel, esta a su vez implementa la interface InterfaceCrud
+Clase MySQLNivelDAO que se encargara de acceder a los datos del objeto nivel, esta a su vez implementa la interface InterfaceCrudForeignKey
 que contiene la guia para realizar un crud simple al objeto
 */
 
-import datos.interfaces.InterfaceCrud;
+import datos.interfaces.DAO;
+import datos.interfaces.mysql.NivelDAO;
 import entidades.Nivel;
-import database.Conexion;
-import entidades.Opcion;
+import database.ConexionMySQL;
 
 import javax.swing.*;
 import java.sql.PreparedStatement;
@@ -17,16 +17,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NivelCrud implements InterfaceCrud<Nivel> {
+public class MySQLNivelDAO implements NivelDAO{
 
-    private final Conexion CON;
+    private final ConexionMySQL CON;
     private PreparedStatement pst;
     private ResultSet rs;
     private boolean resp;
     private Nivel nivel;
 
-    public NivelCrud(){
-        CON = Conexion.getInstance();
+    public MySQLNivelDAO(){
+        CON = ConexionMySQL.getInstance();
     }
 
     // Metodo que consulta los datos de un nivel en especifico
@@ -34,9 +34,11 @@ public class NivelCrud implements InterfaceCrud<Nivel> {
     @Override
     public Nivel obtener(int id){
 
+        String sql = "SELECT * FROM nivel WHERE id = ?";
+
         try{
 
-            pst = CON.conectar().prepareStatement("SELECT * FROM nivel WHERE id = ?");
+            pst = CON.conectar().prepareStatement(sql);
             pst.setInt(1,id);
             rs = pst.executeQuery();
 
@@ -60,7 +62,7 @@ public class NivelCrud implements InterfaceCrud<Nivel> {
     }
 
     @Override
-    public List<Nivel> listar() {
+    public List<Nivel> obtenerTodos() {
 
         List<Nivel> registros = new ArrayList<>();
 
@@ -134,4 +136,35 @@ public class NivelCrud implements InterfaceCrud<Nivel> {
         return resp;
     }
 
+    @Override
+    public boolean eliminar() {
+        return false;
+    }
+
+    @Override
+    public boolean existe(int id) {
+
+        String sql = "SELECT id FROM nivel WHERE id = ?";
+
+        try{
+
+            pst = CON.conectar().prepareStatement(sql);
+            pst.setInt(1, id);
+            rs = pst.executeQuery();
+
+            resp = rs.next();
+
+            pst.close();
+            rs.close();
+
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            CON.desconectar();
+            rs = null;
+            pst = null;
+        }
+
+        return resp;
+    }
 }
