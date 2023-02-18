@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controlador.SetImagen;
 import java.awt.Image;
 import java.awt.Toolkit;
 import modelo.negocio.UsuarioControl;

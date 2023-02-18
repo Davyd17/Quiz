@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controlador.SetImagen;
 import controlador.funcionesadmin.AccesoComponentes;
 import controlador.funcionesadmin.CerrarSesion;
 import controlador.funcionesadmin.InfoControl;
