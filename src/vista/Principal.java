@@ -185,18 +185,22 @@ public class Principal extends javax.swing.JFrame {
                     if (Class.forName("modelo.transferobject.AdminDto").isInstance(usuarioDto)) {
                         
                         infoAdmin = (AdminDto) usuarioDto;
-                        this.dispose();
                         txtUsuario.setText("");
                         txtContrasena.setText("");
                         
-                        FuncionesAdmin juego = new FuncionesAdmin();
-                        juego.setVisible(rootPaneCheckingEnabled);
+                        this.dispose();
+                        FuncionesAdmin funcionesAdmin = new FuncionesAdmin();
+                        funcionesAdmin.setVisible(rootPaneCheckingEnabled);
                         
                     } else if (Class.forName("modelo.transferobject.JugadorDto").isInstance(usuarioDto)) {
                         
                         infoJugador = (JugadorDto) usuarioDto;
                         txtUsuario.setText("");
                         txtContrasena.setText("");
+                        
+                        this.dispose();
+                        Juego juego = new Juego();
+                        juego.setVisible(true);
                         
                     }
                     
