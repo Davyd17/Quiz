@@ -6,7 +6,7 @@ public class Jugador{
     // Atributos
     private int id;
     private int usuarioId; //Foreign Key
-    private int nivelId;
+    private int nivel;
     private int puntosAcumulados;
 
     // Constructor por defecto
@@ -14,10 +14,10 @@ public class Jugador{
     }
 
     // Constructor
-    public Jugador(int id, int usuarioId, int nivelId, int puntosAcumulados) {
+    public Jugador(int id, int usuarioId, int nivel, int puntosAcumulados) {
         this.id = id;
         this.usuarioId = usuarioId;
-        this.nivelId = nivelId;
+        this.nivel = nivel;
         this.puntosAcumulados = puntosAcumulados;
     }
 
@@ -38,12 +38,12 @@ public class Jugador{
         this.usuarioId = usuarioId;
     }
 
-    public int getNivelId() {
-        return nivelId;
+    public int getNivel() {
+        return nivel;
     }
 
-    public void setNivelId(int nivelId) {
-        this.nivelId = nivelId;
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
     }
 
     public int getPuntosAcumulados() {
