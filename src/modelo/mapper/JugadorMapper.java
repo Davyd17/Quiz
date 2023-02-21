@@ -15,7 +15,7 @@ public class JugadorMapper {
                 jugador.getUsuarioId(),
                 jugador.getId(),
                 usuario.getNombreUsuario(),
-                jugador.getNivelId(),
+                jugador.getNivel(),
                 jugador.getPuntosAcumulados()
 
         );

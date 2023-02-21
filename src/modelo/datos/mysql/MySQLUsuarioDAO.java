@@ -80,7 +80,7 @@ public class MySQLUsuarioDAO implements UsuarioDAO {
 
                 Jugador jugador = new Jugador();
                 jugador.setUsuarioId(idGenerado);
-                jugador.setNivelId(1);
+                jugador.setNivel(1);
                 jugador.setPuntosAcumulados(0);
 
                 MySQLJugadorDAO datos = new MySQLJugadorDAO();

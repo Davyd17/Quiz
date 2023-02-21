@@ -7,27 +7,27 @@ import java.io.Serializable;
 public class  JugadorDto extends UsuarioDto implements Serializable {
 
     private int jugadorId;
-    private int nivelId;
+    private int nivel;
     private int puntosAcumulados;
 
     public JugadorDto(){
 
     }
 
-    public JugadorDto(int usuarioId, int jugadorId, String nombreUsuario, int nivelId, int puntosAcumulados) {
+    public JugadorDto(int usuarioId, int jugadorId, String nombreUsuario, int nivel, int puntosAcumulados) {
         super.setUsuarioId(usuarioId);
         this.jugadorId = jugadorId;
         super.setNombreUsuario(nombreUsuario);
-        this.nivelId = nivelId;
+        this.nivel = nivel;
         this.puntosAcumulados = puntosAcumulados;
     }
 
-    public int getNivelId() {
-        return nivelId;
+    public int getNivel() {
+        return nivel;
     }
 
-    public void setNivelId(int nivelId) {
-        this.nivelId = nivelId;
+    public void setNivel(int nivelId) {
+        this.nivel = nivelId;
     }
 
     public int getPuntosAcumulados() {
@@ -52,7 +52,7 @@ public class  JugadorDto extends UsuarioDto implements Serializable {
                 "usuarioId=" + super.getUsuarioId() +
                 ", jugadorId=" + jugadorId +
                 ", nombreUsuario='" + super.getNombreUsuario() + '\'' +
-                ", nivelId=" + nivelId +
+                ", nivelId=" + nivel +
                 ", puntosAcumulados=" + puntosAcumulados +
                 '}';
     }

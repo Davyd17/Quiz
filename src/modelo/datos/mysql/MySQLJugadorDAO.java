@@ -28,12 +28,12 @@ public class MySQLJugadorDAO implements JugadorDAO {
 
         resp = false;
 
-        String sql = "INSERT INTO jugador (usuario_id, nivel_id, puntos_acumulados) VALUES(?,?,?)";
+        String sql = "INSERT INTO jugador (usuario_id, nivel, puntos_acumulados) VALUES(?,?,?)";
 
         try{
             pst = CON.conectar().prepareStatement(sql);
             pst.setInt(1, obj.getUsuarioId());
-            pst.setInt(2, obj.getNivelId());
+            pst.setInt(2, obj.getNivel());
             pst.setInt(3, obj.getPuntosAcumulados());
 
             resp = pst.executeUpdate() > 0;
@@ -88,13 +88,13 @@ public class MySQLJugadorDAO implements JugadorDAO {
     @Override
     public boolean actualizar(Jugador obj) {
 
-        String sql = "UPDATE jugador SET nivel_id = ?, puntos_acumulados = ? WHERE id = ?";
+        String sql = "UPDATE jugador SET nivel = ?, puntos_acumulados = ? WHERE id = ?";
 
         try {
 
             pst = CON.conectar().prepareStatement(sql);
 
-            pst.setInt(1, obj.getNivelId());
+            pst.setInt(1, obj.getNivel());
             pst.setInt(2, obj.getPuntosAcumulados());
             pst.setInt(3, obj.getId());
 
