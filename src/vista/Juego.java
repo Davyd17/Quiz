@@ -5,6 +5,7 @@
 package vista;
 
 import controlador.SetImagen;
+import controlador.juego.AccesLabels;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
@@ -17,12 +18,14 @@ public class Juego extends javax.swing.JFrame {
 
     private final SetImagen SET_IMAGE = new SetImagen(this);
     private final String URL_ICONO = "vista/images/icono.png";
+    private final AccesLabels accesLabels = new AccesLabels(this);
     
     public Juego() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.lblNombreUsuario.setText(Principal.getInfoJugador().getNombreUsuario());
+        //this.lblNombreUsuario.setText(Principal.getInfoJugador().getNombreUsuario());
+        this.accesLabels.setLabels();
     }
     
     @Override
@@ -43,16 +46,16 @@ public class Juego extends javax.swing.JFrame {
 
         grupobtnOpciones = new javax.swing.ButtonGroup();
         pnlJuego = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblPreguntaContenido = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblCerrarSesion = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jLabel4 = new javax.swing.JLabel();
-        lblNivel = new javax.swing.JLabel();
+        rbtnOpcion1 = new javax.swing.JRadioButton();
+        rbtnOpcion2 = new javax.swing.JRadioButton();
+        rbtnOpcion3 = new javax.swing.JRadioButton();
+        rbtnOpcion4 = new javax.swing.JRadioButton();
         lblCategoria = new javax.swing.JLabel();
+        lblNivel = new javax.swing.JLabel();
+        lblPuntos = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,30 +64,40 @@ public class Juego extends javax.swing.JFrame {
 
         pnlJuego.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("jLabel1");
+        lblPreguntaContenido.setText("Contenido de la pregunta");
 
         lblNombreUsuario.setText("Nombre de usuario");
 
         lblCerrarSesion.setText("Cerrar Sesion");
         lblCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        grupobtnOpciones.add(jRadioButton1);
-        jRadioButton1.setText("jRadioButton1");
+        grupobtnOpciones.add(rbtnOpcion1);
+        rbtnOpcion1.setText("Opcion 1");
+        rbtnOpcion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnOpcion1ActionPerformed(evt);
+            }
+        });
 
-        grupobtnOpciones.add(jRadioButton2);
-        jRadioButton2.setText("jRadioButton2");
+        grupobtnOpciones.add(rbtnOpcion2);
+        rbtnOpcion2.setText("Opcion 2");
 
-        grupobtnOpciones.add(jRadioButton3);
-        jRadioButton3.setText("jRadioButton3");
+        grupobtnOpciones.add(rbtnOpcion3);
+        rbtnOpcion3.setText("Opcion 3");
+        rbtnOpcion3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnOpcion3ActionPerformed(evt);
+            }
+        });
 
-        grupobtnOpciones.add(jRadioButton4);
-        jRadioButton4.setText("jRadioButton4");
+        grupobtnOpciones.add(rbtnOpcion4);
+        rbtnOpcion4.setText("Opcion 4");
 
-        jLabel4.setText("jLabel4");
+        lblCategoria.setText("Categoria");
 
         lblNivel.setText("Nivel");
 
-        lblCategoria.setText("Categoria");
+        lblPuntos.setText("Puntos");
 
         javax.swing.GroupLayout pnlJuegoLayout = new javax.swing.GroupLayout(pnlJuego);
         pnlJuego.setLayout(pnlJuegoLayout);
@@ -96,24 +109,24 @@ public class Juego extends javax.swing.JFrame {
                         .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlJuegoLayout.createSequentialGroup()
                                 .addGap(331, 331, 331)
-                                .addComponent(jLabel4))
+                                .addComponent(lblCategoria))
                             .addGroup(pnlJuegoLayout.createSequentialGroup()
                                 .addGap(260, 260, 260)
                                 .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jRadioButton2)))
+                                    .addComponent(rbtnOpcion4)
+                                    .addComponent(rbtnOpcion3)
+                                    .addComponent(rbtnOpcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(rbtnOpcion2)))
                             .addGroup(pnlJuegoLayout.createSequentialGroup()
                                 .addGap(157, 157, 157)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblPreguntaContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 217, Short.MAX_VALUE))
                     .addGroup(pnlJuegoLayout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCategoria)
+                            .addComponent(lblPuntos)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuegoLayout.createSequentialGroup()
                                 .addComponent(lblNivel)
                                 .addGap(137, 137, 137)))
@@ -128,30 +141,30 @@ public class Juego extends javax.swing.JFrame {
             .addGroup(pnlJuegoLayout.createSequentialGroup()
                 .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(28, 28, 28)
                         .addComponent(lblNivel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblCategoria)
-                            .addComponent(jLabel7))
-                        .addGap(44, 44, 44)
-                        .addComponent(jLabel4)
+                        .addComponent(lblPuntos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addGap(60, 60, 60)
+                        .addComponent(lblCategoria)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblPreguntaContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addComponent(jRadioButton1)
+                        .addComponent(rbtnOpcion1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2)
+                        .addComponent(rbtnOpcion2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton3)
+                        .addComponent(rbtnOpcion3)
                         .addGap(18, 18, 18)
-                        .addComponent(jRadioButton4))
+                        .addComponent(rbtnOpcion4))
                     .addGroup(pnlJuegoLayout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(lblNombreUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblCerrarSesion)))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,6 +180,14 @@ public class Juego extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rbtnOpcion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnOpcion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnOpcion1ActionPerformed
+
+    private void rbtnOpcion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnOpcion3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnOpcion3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,11 +227,11 @@ public class Juego extends javax.swing.JFrame {
     //Getters & Setters
     
     public JLabel getLblCategoria() {
-        return lblCategoria;
+        return lblPuntos;
     }
 
     public void setLblCategoria(JLabel lblCategoria) {
-        this.lblCategoria = lblCategoria;
+        this.lblPuntos = lblCategoria;
     }
 
     public JLabel getLblNivel() {
@@ -228,21 +249,39 @@ public class Juego extends javax.swing.JFrame {
     public void setLblNombreUsuario(JLabel lblNombreUsuario) {
         this.lblNombreUsuario = lblNombreUsuario;
     }
+
+    public JLabel getLblPreguntaContenido() {
+        return lblPreguntaContenido;
+    }
+
+    public void setLblPreguntaContenido(JLabel lblPreguntaContenido) {
+        this.lblPreguntaContenido = lblPreguntaContenido;
+    }
+
+    public JLabel getLblPuntos() {
+        return lblPuntos;
+    }
+
+    public void setLblPuntos(JLabel lblPuntos) {
+        this.lblPuntos = lblPuntos;
+    }
+    
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupobtnOpciones;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblCerrarSesion;
     private javax.swing.JLabel lblNivel;
     private javax.swing.JLabel lblNombreUsuario;
+    private javax.swing.JLabel lblPreguntaContenido;
+    private javax.swing.JLabel lblPuntos;
     private javax.swing.JPanel pnlJuego;
+    private javax.swing.JRadioButton rbtnOpcion1;
+    private javax.swing.JRadioButton rbtnOpcion2;
+    private javax.swing.JRadioButton rbtnOpcion3;
+    private javax.swing.JRadioButton rbtnOpcion4;
     // End of variables declaration//GEN-END:variables
 }

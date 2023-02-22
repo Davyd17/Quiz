@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controlador.juego;
-
-import javax.swing.JFrame;
+import controlador.Info;
 import vista.Juego;
 import vista.Principal;
 
@@ -12,19 +11,18 @@ import vista.Principal;
  *
  * @author PC1
  */
-public class AccesLabels extends Juego{
+public class AccesLabels{
     
     private Juego juego;
     
     public AccesLabels(Juego juego){
-        
-        this. juego = juego;
-           
+           this.juego = juego;
     }
     
     public void setLabels(){
         
-        getLblNombreUsuario().setText(Principal.getInfoJugador().getNombreUsuario());
+        this.juego.getLblNombreUsuario().setText(Info.getInfoJugador().getNombreUsuario());
+        this.juego.getLblNivel().setText("Nivel: " + Integer.toString(Info.getInfoJugador().getNivel()));
         
         
     }

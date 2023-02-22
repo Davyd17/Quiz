@@ -1,6 +1,7 @@
 package controlador.funcionesadmin;
 
 
+import controlador.Info;
 import java.awt.event.MouseEvent;
 import vista.FuncionesAdmin;
 import vista.Principal;
@@ -17,7 +18,7 @@ public class CerrarSesion {
     }
 
     public void mouseClicked(MouseEvent e) {
-        Principal.setInfoAdmin(null);
+        Info.setInfoAdmin(null);
         this.FUNCIONESADMIN.dispose();
         this.PRINCIPAL.setVisible(true);
     }

@@ -4,6 +4,7 @@
  */
 package vista;
 
+import controlador.Info;
 import controlador.SetImagen;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -18,8 +19,6 @@ import modelo.transferobject.UsuarioDto;
  */
 public class Principal extends javax.swing.JFrame {
     
-    private static JugadorDto infoJugador;
-    private static AdminDto infoAdmin;
     private final SetImagen setImagen = new SetImagen(this);
     private final String URL_QUIZLOGO = "src/vista/images/quizLogo.png";
     private final String URL_ICONO = "vista/images/icono.png";
@@ -184,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
                     
                     if (Class.forName("modelo.transferobject.AdminDto").isInstance(usuarioDto)) {
                         
-                        infoAdmin = (AdminDto) usuarioDto;
+                        Info.setInfoAdmin((AdminDto) usuarioDto);
                         txtUsuario.setText("");
                         txtContrasena.setText("");
                         
@@ -194,13 +193,13 @@ public class Principal extends javax.swing.JFrame {
                         
                     } else if (Class.forName("modelo.transferobject.JugadorDto").isInstance(usuarioDto)) {
                         
-                        infoJugador = (JugadorDto) usuarioDto;
+                        Info.setInfoJugador((JugadorDto) usuarioDto);
                         txtUsuario.setText("");
                         txtContrasena.setText("");
                         
                         this.dispose();
                         Juego juego = new Juego();
-                        juego.setVisible(true);
+                        juego.setVisible(rootPaneCheckingEnabled);
                         
                     }
                     
@@ -235,21 +234,6 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContrasenaActionPerformed
 
-    public static JugadorDto getInfoJugador() {
-        return infoJugador;
-    }
-
-    public static void setInfoJugador(JugadorDto infoJugador) {
-        Principal.infoJugador = infoJugador;
-    }
-
-    public static AdminDto getInfoAdmin() {
-        return infoAdmin;
-    }
-
-    public static void setInfoAdmin(AdminDto infoAdmin) {
-        Principal.infoAdmin = infoAdmin;
-    }
 
     //Getter & Setter
     

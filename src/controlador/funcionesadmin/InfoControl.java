@@ -4,6 +4,7 @@
  */
 package controlador.funcionesadmin;
 
+import controlador.Info;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -24,7 +25,7 @@ public class InfoControl {
 
     public boolean getInfo() {
 
-        FuncionesAdmin.setNivelDto(new NivelControl().obtener(FuncionesAdmin.getNivelSeleccionado()));
+        Info.setNivelDto(new NivelControl().obtener(FuncionesAdmin.getNivelSeleccionado()));
 
         if (FuncionesAdmin.getNivelDto() != null) {
 

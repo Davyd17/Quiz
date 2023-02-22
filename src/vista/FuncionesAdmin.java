@@ -4,13 +4,13 @@
  */
 package vista;
 
+import controlador.Info;
 import controlador.SetImagen;
 import controlador.funcionesadmin.AccesoComponentes;
 import controlador.funcionesadmin.CerrarSesion;
 import controlador.funcionesadmin.InfoControl;
 import modelo.entidades.Opcion;
 import java.awt.Image;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JButton;
@@ -47,7 +47,7 @@ public class FuncionesAdmin extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.SET_IMAGE.ajustarImagenLabel(lblLogo, URL_QUIZLOGO);
-        this.lblNombreUsuario.setText(Principal.getInfoAdmin().getNombreUsuario());
+        this.lblNombreUsuario.setText(Info.getInfoAdmin().getNombreUsuario());
         this.ACCESO.setVistaComponentes(false, false, false);
         this.ACCESO.isEditable(false);
     }
