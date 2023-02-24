@@ -1,9 +1,6 @@
-
 package controlador;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import modelo.entidades.Opcion;
 import modelo.negocio.NivelControl;
 import modelo.transferobject.AdminDto;
@@ -12,7 +9,7 @@ import modelo.transferobject.NivelDto;
 import modelo.transferobject.PreguntaDto;
 
 public class Info {
-    
+
     private static NivelDto nivelDto;
     private static ArrayList<PreguntaDto> listaPreguntas;
     private static ArrayList<Opcion[]> listaOpciones;
@@ -20,54 +17,54 @@ public class Info {
     private static AdminDto infoAdmin;
 
     public Info() {
-        listaPreguntas = new ArrayList<>();
-        listaOpciones = new ArrayList<>();
+    }
+
+    public boolean getInfoNivel(int nivel) {
+
+        nivelDto = new NivelControl().obtener(nivel);
+
+        if (nivelDto != null) {
+
+            addAllPreguntasDto();
+            return true;
+            
+        } else {
+            nivelDto = null;
+            return false;
+        }
     }
     
-    public void getInfoNivel(int nivel){
-        
-        nivelDto = new NivelControl().obtener(nivel);
-        listaPreguntas.addAll(nivelDto.getPreguntas());
-        
-         
-        
-        for(PreguntaDto preguntaDto : listaPreguntas){
+
+    private void addAllPreguntasDto() {
+
+        listaPreguntas = nivelDto.getPreguntas();
+
+        if (listaPreguntas != null) addOpcionesPerPregunta();
+         else  listaPreguntas = null;
             
-            Opcion[] opciones = new Opcion[4];
-            
-            for(int i = 0; i <= opciones.length - 1; i++){
+        
+    }
+
+    private void addOpcionesPerPregunta() {
+
+        listaOpciones = new ArrayList<>();
+
+        int count = 0;
+        for (PreguntaDto preguntaDto : listaPreguntas) {
+
+            Opcion[] opciones = new Opcion[listaPreguntas.get(count).getOpciones().size()];
+
+            for (int i = 0; i <= opciones.length - 1; i++) {
                 opciones[i] = preguntaDto.getOpciones().get(i);
             }
-            
-            listaOpciones.add(opciones);
-            
-        }
-        
-    }
-    
-    public static void main(String[] args) {
-        
-        Info info = new Info();
-        info.getInfoNivel(1);
-       
-        int count = 0;
-        for(PreguntaDto preguntaDto : listaPreguntas){
-            
-            System.out.println(preguntaDto.getContenido());
-            
-            Opcion[] opciones = listaOpciones.get(count);
-            
-            for(int i = 0; i <= listaOpciones.get(i).length - 1; i++){        
-                    
-                    System.out.println(opciones[i].getPreguntaId() + opciones[i].getContenido());
-            }
-           
-           count ++; 
-        }
-    }
-    
-    //Getters & Setters
 
+            listaOpciones.add(opciones);
+
+        }
+    }
+    
+
+    //Getters & Setters
     public static NivelDto getNivelDto() {
         return nivelDto;
     }
@@ -107,6 +104,5 @@ public class Info {
     public static void setInfoAdmin(AdminDto infoAdmin) {
         Info.infoAdmin = infoAdmin;
     }
-    
-    
+
 }

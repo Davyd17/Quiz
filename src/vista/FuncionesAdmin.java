@@ -8,19 +8,22 @@ import controlador.Info;
 import controlador.SetImagen;
 import controlador.funcionesadmin.AccesoComponentes;
 import controlador.funcionesadmin.CerrarSesion;
-import controlador.funcionesadmin.InfoControl;
-import modelo.entidades.Opcion;
+import controlador.funcionesadmin.AdminInfoControl;
+import controlador.funcionesadmin.actionperformed.BotonNivel;
+import controlador.funcionesadmin.actionperformed.BotonPregunta;
+import controlador.funcionesadmin.ControlCampos;
+import controlador.funcionesadmin.ShowInfo;
+import controlador.funcionesadmin.actionperformed.BotonCancelar;
+import controlador.funcionesadmin.actionperformed.BotonGuardar;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import modelo.transferobject.NivelDto;
-import modelo.transferobject.PreguntaDto;
+
 
 /**
  *
@@ -29,20 +32,22 @@ import modelo.transferobject.PreguntaDto;
 public class FuncionesAdmin extends javax.swing.JFrame {
 
     private final SetImagen SET_IMAGE = new SetImagen(this);
-    private static NivelDto nivelDto;
-    private static List<PreguntaDto> listaPreguntas;
-    private static List<Opcion> listaOpciones;
+    private final ShowInfo SHOWINFO;
+    private final ControlCampos CONTROLCAMPOS;
+    private BotonPregunta botonPregunta;
+    private BotonNivel botonNivel;
     private static int preguntaIndice;
     private static int nivelSeleccionado;
     private final String URL_QUIZLOGO = "src/vista/images/quizLogo.png";
     private final String URL_ICONO = "vista/images/icono.png";
     private final AccesoComponentes ACCESO = new AccesoComponentes(this);
-    private final InfoControl DATOS = new InfoControl(this);
+    private final AdminInfoControl DATOS = new AdminInfoControl(this);
 
     /**
      * Creates new form Juego
      */
     public FuncionesAdmin() {
+        
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -50,6 +55,8 @@ public class FuncionesAdmin extends javax.swing.JFrame {
         this.lblNombreUsuario.setText(Info.getInfoAdmin().getNombreUsuario());
         this.ACCESO.setVistaComponentes(false, false, false);
         this.ACCESO.isEditable(false);
+        this.SHOWINFO = new ShowInfo(this);
+        this.CONTROLCAMPOS = new ControlCampos(this);
     }
 
     @Override
@@ -405,48 +412,12 @@ public class FuncionesAdmin extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 
-        if (nivelDto != null) {
-
-            this.ACCESO.setVistaComponentes(true, true, true);
-
-            if (listaPreguntas == null || listaPreguntas.get(preguntaIndice - 1) == null) {
-                this.ACCESO.setVistaComponentes(true, true, false);
-            }
-
-        } else {
-            this.ACCESO.setVistaComponentes(false, false, false);
-        }
-
-        this.ACCESO.isEditable(false);
-        this.DATOS.getInfo();
+       BotonCancelar cancelar = new BotonCancelar(evt, this);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        if (DATOS.validarCamposVacios()) {
-
-            if (nivelDto != null && listaPreguntas != null && preguntaIndice <= listaPreguntas.size() - 1) {
-
-                if (DATOS.editInfo()) {
-                    this.ACCESO.isEditable(false);
-                    this.DATOS.getInfo();
-                }
-            } else if (nivelDto == null) {
-
-                if (this.DATOS.insertNewNivel()) {
-                    this.ACCESO.isEditable(false);
-                    this.DATOS.getInfo();
-                    this.ACCESO.setVistaComponentes(true, true, false);
-                }
-
-            } else {
-
-                if (this.DATOS.insertNewPregunta()) {
-                    this.ACCESO.isEditable(false);
-                    this.DATOS.getInfo();
-                }
-            }
-        }
+        BotonGuardar botonGuardar = new BotonGuardar(evt, this);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -456,188 +427,61 @@ public class FuncionesAdmin extends javax.swing.JFrame {
 
     private void btnPregunta5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta5ActionPerformed
 
-        preguntaIndice = 4;
-        this.ACCESO.setVistaComponentes(true, true, true);
-
-        if (listaPreguntas != null && preguntaIndice <= listaPreguntas.size() - 1) {
-
-            this.ACCESO.isEditable(false);
-            this.DATOS.getInfo();
-
-        } else {
-
-            this.DATOS.vaciarCampos(false, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonPregunta = new BotonPregunta(evt, this, 4);
     }//GEN-LAST:event_btnPregunta5ActionPerformed
 
     private void btnPregunta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta4ActionPerformed
 
-        preguntaIndice = 3;
-        this.ACCESO.setVistaComponentes(true, true, true);
-
-        if (listaPreguntas != null && preguntaIndice <= listaPreguntas.size() - 1) {
-
-            this.ACCESO.isEditable(false);
-            this.DATOS.getInfo();
-
-        } else {
-
-            this.DATOS.vaciarCampos(false, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonPregunta = new BotonPregunta(evt, this, 3);
     }//GEN-LAST:event_btnPregunta4ActionPerformed
 
     private void btnPregunta3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta3ActionPerformed
 
-        preguntaIndice = 2;
-        this.ACCESO.setVistaComponentes(true, true, true);
-
-        if (listaPreguntas != null && preguntaIndice <= listaPreguntas.size() - 1) {
-
-            this.ACCESO.isEditable(false);
-            this.DATOS.getInfo();
-
-        } else {
-
-            this.DATOS.vaciarCampos(false, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonPregunta = new BotonPregunta(evt, this, 2);
     }//GEN-LAST:event_btnPregunta3ActionPerformed
 
     private void btnPregunta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta2ActionPerformed
 
-        preguntaIndice = 1;
-        this.ACCESO.setVistaComponentes(true, true, true);
-
-        if (listaPreguntas != null && preguntaIndice <= listaPreguntas.size() - 1) {
-
-            this.ACCESO.isEditable(false);
-            this.DATOS.getInfo();
-
-        } else {
-
-            this.DATOS.vaciarCampos(false, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonPregunta = new BotonPregunta(evt, this, 1);
     }//GEN-LAST:event_btnPregunta2ActionPerformed
 
     private void btnPregunta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta1ActionPerformed
 
-        preguntaIndice = 0;
-
-        this.ACCESO.setVistaComponentes(true, true, true);
-
-        if (listaPreguntas != null && preguntaIndice <= listaPreguntas.size() - 1) {
-
-            this.ACCESO.isEditable(false);
-            this.DATOS.getInfo();
-
-        } else {
-
-            this.DATOS.vaciarCampos(false, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonPregunta = new BotonPregunta(evt, this, 0);
     }//GEN-LAST:event_btnPregunta1ActionPerformed
 
     private void btnNivel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel1ActionPerformed
 
-        nivelSeleccionado = 1;
-
-        if (this.DATOS.getInfo()) {
-            this.ACCESO.setVistaComponentes(true, true, false);
-            this.ACCESO.isEditable(false);
-
-        } else {
-
-            this.ACCESO.setVistaComponentes(true, false, false);
-            this.DATOS.vaciarCampos(true, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonNivel = new BotonNivel(evt, this, 1);
 
     }//GEN-LAST:event_btnNivel1ActionPerformed
 
     private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
 
-        CerrarSesion cerrarSesion = new CerrarSesion(this);
-        cerrarSesion.mouseClicked(evt);
+        CerrarSesion cerrarSesion = new CerrarSesion(evt, this);
     }//GEN-LAST:event_lblCerrarSesionMouseClicked
 
     private void btnNivel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel2ActionPerformed
         
-        nivelSeleccionado = 2;
-
-        if (this.DATOS.getInfo()) {
-            this.ACCESO.setVistaComponentes(true, true, false);
-            this.ACCESO.isEditable(false);
-
-        } else {
-
-            this.ACCESO.setVistaComponentes(true, false, false);
-            this.DATOS.vaciarCampos(true, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonNivel = new BotonNivel(evt, this, 2);
 
     }//GEN-LAST:event_btnNivel2ActionPerformed
 
     private void btnNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel3ActionPerformed
         
-        nivelSeleccionado = 3;
-
-        if (this.DATOS.getInfo()) {
-            this.ACCESO.setVistaComponentes(true, true, false);
-            this.ACCESO.isEditable(false);
-
-        } else {
-
-            this.ACCESO.setVistaComponentes(true, false, false);
-            this.DATOS.vaciarCampos(true, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonNivel = new BotonNivel(evt, this, 3);
 
     }//GEN-LAST:event_btnNivel3ActionPerformed
 
     private void btnNivel4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel4ActionPerformed
         
-        nivelSeleccionado = 4;
-
-        if (this.DATOS.getInfo()) {
-            this.ACCESO.setVistaComponentes(true, true, false);
-            this.ACCESO.isEditable(false);
-
-        } else {
-
-            this.ACCESO.setVistaComponentes(true, false, false);
-            this.DATOS.vaciarCampos(true, true);
-            this.ACCESO.isEditable(true);
-
-        }
+       this.botonNivel = new BotonNivel(evt, this, 4);
 
     }//GEN-LAST:event_btnNivel4ActionPerformed
 
     private void btnNivel5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel5ActionPerformed
         
-        nivelSeleccionado = 5;
-
-        if (this.DATOS.getInfo()) {
-            this.ACCESO.setVistaComponentes(true, true, false);
-            this.ACCESO.isEditable(false);
-
-        } else {
-
-            this.ACCESO.setVistaComponentes(true, false, false);
-            this.DATOS.vaciarCampos(true, true);
-            this.ACCESO.isEditable(true);
-
-        }
+        this.botonNivel = new BotonNivel(evt, this, 5);
 
     }//GEN-LAST:event_btnNivel5ActionPerformed
 
@@ -884,31 +728,6 @@ public class FuncionesAdmin extends javax.swing.JFrame {
     public void setScrolltxtPreguntaContenido(JScrollPane scrolltxtPreguntaContenido) {
         this.scrolltxtPreguntaContenido = scrolltxtPreguntaContenido;
     }
-
-    public static NivelDto getNivelDto() {
-        return nivelDto;
-    }
-
-    public static void setNivelDto(NivelDto nivelDto) {
-        FuncionesAdmin.nivelDto = nivelDto;
-    }
-
-    public static List<PreguntaDto> getListaPreguntas() {
-        return listaPreguntas;
-    }
-
-    public static void setListaPreguntas(List<PreguntaDto> listaPreguntas) {
-        FuncionesAdmin.listaPreguntas = listaPreguntas;
-    }
-
-    public static List<Opcion> getListaOpciones() {
-        return listaOpciones;
-    }
-
-    public static void setListaOpciones(List<Opcion> listaOpciones) {
-        FuncionesAdmin.listaOpciones = listaOpciones;
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
