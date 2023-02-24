@@ -14,8 +14,6 @@ public final class BotonNivel extends ActionPerformedAbstract {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        //FuncionesAdmin.setPreguntaIndice(0);
-
         if (super.getSHOW_INFO().showNivel()) {
             super.getACCESO_COMPONENTES().setVistaComponentes(true, true, false);
             super.getACCESO_COMPONENTES().isEditable(false);
