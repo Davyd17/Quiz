@@ -19,11 +19,10 @@ public class PreguntaControl {
         DATOS = new MySQLPreguntaDAO();
     }
 
-     public ArrayList<PreguntaDto> obtenerListaPreguntasPorNivel(int nivelId){
+     public ArrayList<PreguntaDto> obtenerListaDePreguntasPorNivelId(int nivelId){
 
         ArrayList<Pregunta> preguntaList = DATOS.obtenerListaPorNivel(nivelId);
-
-        return  preguntaDtoList;
+        return  obtenerListaPreguntaDto(preguntaList);
     } 
      
      private ArrayList<PreguntaDto> obtenerListaPreguntaDto(ArrayList<Pregunta> preguntaList){
