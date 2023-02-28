@@ -6,13 +6,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionMySQL {
+    
     // Constantes para la conexion
     private final String URL = "jdbc:mysql://localhost:3306/";
     private final String DB = "quiz?useSSL=false";
     private final String USER = "root";
     private final String PASSWORD = "219035";
 
-    public static ConexionMySQL instancia; //Objeto que permite aplicar una unica instancia y asi aplicar el patron Singleton
+    public static ConexionMySQL instancia; //Variable que permite aplicar una unica instancia y asi aplicar el patron Singleton
 
     public Connection cadena; // Variable que almacenara la conexion a mysql y la base de datos.
 
@@ -20,7 +21,7 @@ public class ConexionMySQL {
         this.cadena = null;
     }
 
-    //Metodo de tipo Connection que nos permite conectar con la base de datos
+    //Metodo que nos permite conectar con la base de datos
     public Connection conectar() {
         try {
 
@@ -45,7 +46,7 @@ public class ConexionMySQL {
         }
     }
 
-    //Metodo que permite obtener la instancia al objeto conexion y asi aplicar el patron singleton
+    //Metodo que permite obtener la instancia a la variable conexion y asi aplicar el patron singleton
     public synchronized static ConexionMySQL getInstance(){
         if(instancia == null){
             instancia = new ConexionMySQL();

@@ -22,7 +22,7 @@ public class NivelControl {
     public NivelDto obtener(int nivel) {
 
         if (DATOS.existe(nivel)) {
-            nivelDto = new NivelMapper().CreateDTO(DATOS.obtener(nivel), new PreguntaControl().obtenerListaPorNivel(DATOS.obtener(nivel).getId()));
+            nivelDto = new NivelMapper().CreateDTO(DATOS.obtener(nivel), new PreguntaControl().obtenerListaDePreguntasPorNivelId(DATOS.obtener(nivel).getId()));
         }
 
         return nivelDto;

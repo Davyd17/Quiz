@@ -19,12 +19,18 @@ public class PreguntaControl {
         DATOS = new MySQLPreguntaDAO();
     }
 
-     public ArrayList<PreguntaDto> obtenerListaPorNivel(int nivelId){
+     public ArrayList<PreguntaDto> obtenerListaPreguntasPorNivel(int nivelId){
 
-        ArrayList<Pregunta> registros = DATOS.obtenerListaPorNivel(nivelId);
-        ArrayList<PreguntaDto> preguntaDtoList = new ArrayList<>();
+        ArrayList<Pregunta> preguntaList = DATOS.obtenerListaPorNivel(nivelId);
 
-        for(Pregunta pregunta : registros){
+        return  preguntaDtoList;
+    } 
+     
+     private ArrayList<PreguntaDto> obtenerListaPreguntaDto(ArrayList<Pregunta> preguntaList){
+         
+         ArrayList<PreguntaDto> preguntaDtoList = new ArrayList<>();
+         
+         for(Pregunta pregunta : preguntaList){
 
             PreguntaDto preguntaDto = new PreguntaMapper().CreateDto(pregunta, new OpcionControl().obtenerListaPorPregunta(pregunta.getId()));
 
@@ -34,9 +40,10 @@ public class PreguntaControl {
                 JOptionPane.showMessageDialog(null, "Hubo un error al obtener la pregunta");
             }
         }
-
-        return  preguntaDtoList;
-    }
+         
+         return preguntaDtoList;
+         
+     }
 
     public boolean insertar(int nivelId, String contenido){
 
