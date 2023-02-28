@@ -5,6 +5,8 @@
 package controlador.funcionesadmin;
 
 import controlador.Info;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import modelo.entidades.Opcion;
 import vista.FuncionesAdmin;
 
@@ -12,17 +14,17 @@ import vista.FuncionesAdmin;
  *
  * @author PC1
  */
-public class ShowInfo {
-    
+public class AdminInfo {
+
     private final FuncionesAdmin FUNCIONESADMIN;
     private boolean resultado;
     private static Info info;
 
-    public ShowInfo(FuncionesAdmin FUNCIONESADMIN) {
+    public AdminInfo(FuncionesAdmin FUNCIONESADMIN) {
         this.FUNCIONESADMIN = FUNCIONESADMIN;
         info = new Info();
     }
-    
+
     public boolean showNivel() {
         if (info.getInfoNivel(FuncionesAdmin.getNivelSeleccionado())) {
             FUNCIONESADMIN.getTxtCategoria().setText(Info.getNivelDto().getCategoria());
@@ -35,23 +37,24 @@ public class ShowInfo {
         }
         return resultado;
     }
-    
+
     private void showPregunta() {
-        
+
         if (Info.getListaPreguntas() != null && Info.getListaPreguntas().size() > FuncionesAdmin.getPreguntaIndice()) {
             FUNCIONESADMIN.getTxtPreguntaContenido().setText(Info.getListaPreguntas().get(FuncionesAdmin.getPreguntaIndice()).getContenido());
+
             Opcion[] opciones = Info.getListaOpciones().get(FuncionesAdmin.getPreguntaIndice());
-            FUNCIONESADMIN.getTxtOpcion1().setText(opciones[0].getContenido());
-            FUNCIONESADMIN.getRbtnOpcion1().setSelected(opciones[0].isRespuesta());
-            FUNCIONESADMIN.getTxtOpcion2().setText(opciones[1].getContenido());
-            FUNCIONESADMIN.getRbtnOpcion2().setSelected(opciones[1].isRespuesta());
-            FUNCIONESADMIN.getTxtOpcion3().setText(opciones[2].getContenido());
-            FUNCIONESADMIN.getRbtnOpcion3().setSelected(opciones[2].isRespuesta());
-            FUNCIONESADMIN.getTxtOpcion4().setText(opciones[3].getContenido());
-            FUNCIONESADMIN.getRbtnOpcion4().setSelected(opciones[3].isRespuesta());
+
+            JTextField[] txtOpciones = new ControlOpciones(FUNCIONESADMIN).getOpcionesTextField();
+            JRadioButton[] botonOpciones = new ControlOpciones(FUNCIONESADMIN).getOpcionesRadioButton();
+
+            for (int i = 0; i <= opciones.length - 1; i++) {
+
+                txtOpciones[i].setText(opciones[i].getContenido());
+                botonOpciones[i].setSelected(opciones[i].isRespuesta());
+
+            }
         }
     }
 
-   
-    
 }

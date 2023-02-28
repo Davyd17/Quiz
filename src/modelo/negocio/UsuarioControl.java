@@ -64,5 +64,12 @@ public class UsuarioControl {
         return usuarioDto;
     }
     
+    protected Usuario obtener(int id){
+        
+        this.usuario = DATOS.obtener(id);
+        
+        return usuario;
+    }
+    
         
     }

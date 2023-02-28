@@ -1,9 +1,9 @@
-package controlador.funcionesadmin.actionperformed;
+package controlador.funcionesadmin.actionperformer;
 
 import java.awt.event.ActionEvent;
 import vista.FuncionesAdmin;
 
-public final class BotonNivel extends ActionPerformedAbstract {
+public final class BotonNivel extends ActionPerformerAbstract {
 
     public BotonNivel(ActionEvent e, FuncionesAdmin FUNCIONES_ADMIN, int nivelSeleccionado) {
         super(FUNCIONES_ADMIN);

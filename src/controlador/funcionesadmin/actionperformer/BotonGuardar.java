@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controlador.funcionesadmin.actionperformed;
+package controlador.funcionesadmin.actionperformer;
 
 import controlador.Info;
 import java.awt.event.ActionEvent;
 import vista.FuncionesAdmin;
 
-public final class BotonGuardar extends ActionPerformedAbstract{
+public final class BotonGuardar extends ActionPerformerAbstract{
 
     public BotonGuardar(ActionEvent evt, FuncionesAdmin FUNCIONES_ADMIN) {
         super(FUNCIONES_ADMIN);

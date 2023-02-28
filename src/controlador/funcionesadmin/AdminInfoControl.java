@@ -19,9 +19,13 @@ public class AdminInfoControl {
     private final FuncionesAdmin FUNCIONESADMIN;
     private boolean resultado;
     private static Info info;
+    private final JTextField[] OPCIONES_JTEXTFIELD;
+    private final JRadioButton[] OPCIONES_JRADIOBUTTON;
 
     public AdminInfoControl(FuncionesAdmin FUNCIONESADMIN) {
         this.FUNCIONESADMIN = FUNCIONESADMIN;
+        this.OPCIONES_JTEXTFIELD = new ControlOpciones(FUNCIONESADMIN).getOpcionesTextField();
+        this.OPCIONES_JRADIOBUTTON = new ControlOpciones(FUNCIONESADMIN).getOpcionesRadioButton();
         info = new Info();
     }
 
@@ -37,30 +41,18 @@ public class AdminInfoControl {
                 FUNCIONESADMIN.getTxtPreguntaContenido().getText());
 
         boolean opcionesEditadas = false;
-
-        JTextField[] opcionesTextField = new JTextField[4];
-        opcionesTextField[0] = FUNCIONESADMIN.getTxtOpcion1();
-        opcionesTextField[1] = FUNCIONESADMIN.getTxtOpcion2();
-        opcionesTextField[2] = FUNCIONESADMIN.getTxtOpcion3();
-        opcionesTextField[3] = FUNCIONESADMIN.getTxtOpcion4();
-
-        JRadioButton[] botonOpciones = new JRadioButton[4];
-        botonOpciones[0] = FUNCIONESADMIN.getRbtnOpcion1();
-        botonOpciones[1] = FUNCIONESADMIN.getRbtnOpcion2();
-        botonOpciones[2] = FUNCIONESADMIN.getRbtnOpcion3();
-        botonOpciones[3] = FUNCIONESADMIN.getRbtnOpcion4();
         
         int validacion = 0;
         for (int i = 0; i <= Info.getListaOpciones().get(FuncionesAdmin.getPreguntaIndice()).length - 1; i++) {
-            
+
             Opcion[] opciones = Info.getListaOpciones().get(FuncionesAdmin.getPreguntaIndice());
 
             if (new OpcionControl().editar(opciones[i].getId(), opciones[i].getPreguntaId(),
-                    opcionesTextField[i].getText(), botonOpciones[i].isSelected())) {
+                    OPCIONES_JTEXTFIELD[i].getText(), OPCIONES_JRADIOBUTTON[i].isSelected())) {
                 validacion++;
             }
 
-            if (validacion ==  Info.getListaOpciones().get(FuncionesAdmin.getPreguntaIndice()).length - 1) {
+            if (validacion == Info.getListaOpciones().get(FuncionesAdmin.getPreguntaIndice()).length - 1) {
                 opcionesEditadas = true;
             }
 
@@ -73,7 +65,7 @@ public class AdminInfoControl {
         } else {
             JOptionPane.showMessageDialog(FUNCIONESADMIN, "Hubo un error en la edicion", "Error", JOptionPane.ERROR_MESSAGE);
         }
-         
+
         return resultado;
     }
 
@@ -101,26 +93,14 @@ public class AdminInfoControl {
 
         int preguntaId = Info.getNivelDto().getPreguntas().get(FuncionesAdmin.getPreguntaIndice()).getPreguntaId();
 
-        JTextField[] opcionesTextField = new JTextField[4];
-        opcionesTextField[0] = FUNCIONESADMIN.getTxtOpcion1();
-        opcionesTextField[1] = FUNCIONESADMIN.getTxtOpcion2();
-        opcionesTextField[2] = FUNCIONESADMIN.getTxtOpcion3();
-        opcionesTextField[3] = FUNCIONESADMIN.getTxtOpcion4();
-
-        JRadioButton[] botonOpciones = new JRadioButton[4];
-        botonOpciones[0] = FUNCIONESADMIN.getRbtnOpcion1();
-        botonOpciones[1] = FUNCIONESADMIN.getRbtnOpcion2();
-        botonOpciones[2] = FUNCIONESADMIN.getRbtnOpcion3();
-        botonOpciones[3] = FUNCIONESADMIN.getRbtnOpcion4();
-
         boolean opcionesEditadas = false;
 
         int validacion = 0;
         for (int i = 0; i <= 3; i++) {
 
             if (new OpcionControl().insertar(preguntaId,
-                    opcionesTextField[i].getText(),
-                    botonOpciones[i].isSelected())) {
+                    OPCIONES_JTEXTFIELD[i].getText(),
+                    OPCIONES_JRADIOBUTTON[i].isSelected())) {
                 validacion++;
             }
         }

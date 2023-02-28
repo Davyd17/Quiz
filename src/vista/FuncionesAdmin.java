@@ -7,14 +7,12 @@ package vista;
 import controlador.Info;
 import controlador.SetImagen;
 import controlador.funcionesadmin.AccesoComponentes;
-import controlador.funcionesadmin.CerrarSesion;
-import controlador.funcionesadmin.AdminInfoControl;
-import controlador.funcionesadmin.actionperformed.BotonNivel;
-import controlador.funcionesadmin.actionperformed.BotonPregunta;
-import controlador.funcionesadmin.ControlCampos;
-import controlador.funcionesadmin.ShowInfo;
-import controlador.funcionesadmin.actionperformed.BotonCancelar;
-import controlador.funcionesadmin.actionperformed.BotonGuardar;
+import controlador.CierreSesion;
+import controlador.funcionesadmin.actionperformer.ActionPerformerAbstract;
+import controlador.funcionesadmin.actionperformer.BotonNivel;
+import controlador.funcionesadmin.actionperformer.BotonPregunta;
+import controlador.funcionesadmin.actionperformer.BotonCancelar;
+import controlador.funcionesadmin.actionperformer.BotonGuardar;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JButton;
@@ -32,16 +30,12 @@ import javax.swing.JTextField;
 public class FuncionesAdmin extends javax.swing.JFrame {
 
     private final SetImagen SET_IMAGE = new SetImagen(this);
-    private final ShowInfo SHOWINFO;
-    private final ControlCampos CONTROLCAMPOS;
-    private BotonPregunta botonPregunta;
-    private BotonNivel botonNivel;
+    private ActionPerformerAbstract actionPerformer;
     private static int preguntaIndice;
     private static int nivelSeleccionado;
     private final String URL_QUIZLOGO = "src/vista/images/quizLogo.png";
     private final String URL_ICONO = "vista/images/icono.png";
-    private final AccesoComponentes ACCESO = new AccesoComponentes(this);
-    private final AdminInfoControl DATOS = new AdminInfoControl(this);
+    private final AccesoComponentes accesoComponentes = new AccesoComponentes(this);
 
     /**
      * Creates new form Juego
@@ -53,10 +47,8 @@ public class FuncionesAdmin extends javax.swing.JFrame {
         this.setResizable(false);
         this.SET_IMAGE.ajustarImagenLabel(lblLogo, URL_QUIZLOGO);
         this.lblNombreUsuario.setText(Info.getInfoAdmin().getNombreUsuario());
-        this.ACCESO.setVistaComponentes(false, false, false);
-        this.ACCESO.isEditable(false);
-        this.SHOWINFO = new ShowInfo(this);
-        this.CONTROLCAMPOS = new ControlCampos(this);
+        this.accesoComponentes.setVistaComponentes(false, false, false);
+        this.accesoComponentes.isEditable(false);
     }
 
     @Override
@@ -412,76 +404,77 @@ public class FuncionesAdmin extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 
-       BotonCancelar cancelar = new BotonCancelar(evt, this);
+        this.actionPerformer = new BotonCancelar(evt, this);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        BotonGuardar botonGuardar = new BotonGuardar(evt, this);
+        this.actionPerformer = new BotonGuardar(evt, this);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-        this.ACCESO.isEditable(true);
+        this.accesoComponentes.isEditable(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnPregunta5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta5ActionPerformed
 
-        this.botonPregunta = new BotonPregunta(evt, this, 4);
+        this.actionPerformer = new BotonPregunta(evt, this, 4);
     }//GEN-LAST:event_btnPregunta5ActionPerformed
 
     private void btnPregunta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta4ActionPerformed
 
-        this.botonPregunta = new BotonPregunta(evt, this, 3);
+        this.actionPerformer = new BotonPregunta(evt, this, 3);
     }//GEN-LAST:event_btnPregunta4ActionPerformed
 
     private void btnPregunta3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta3ActionPerformed
 
-        this.botonPregunta = new BotonPregunta(evt, this, 2);
+        this.actionPerformer = new BotonPregunta(evt, this, 2);
     }//GEN-LAST:event_btnPregunta3ActionPerformed
 
     private void btnPregunta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta2ActionPerformed
 
-        this.botonPregunta = new BotonPregunta(evt, this, 1);
+        this.actionPerformer = new BotonPregunta(evt, this, 1);
     }//GEN-LAST:event_btnPregunta2ActionPerformed
 
     private void btnPregunta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPregunta1ActionPerformed
 
-        this.botonPregunta = new BotonPregunta(evt, this, 0);
+        this.actionPerformer = new BotonPregunta(evt, this, 0);
     }//GEN-LAST:event_btnPregunta1ActionPerformed
 
     private void btnNivel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel1ActionPerformed
 
-        this.botonNivel = new BotonNivel(evt, this, 1);
+        this.actionPerformer = new BotonNivel(evt, this, 1);
 
     }//GEN-LAST:event_btnNivel1ActionPerformed
 
     private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
 
-        CerrarSesion cerrarSesion = new CerrarSesion(evt, this);
+        CierreSesion cerrarSesion = new CierreSesion();
+        cerrarSesion.finalizar(this);
     }//GEN-LAST:event_lblCerrarSesionMouseClicked
 
     private void btnNivel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel2ActionPerformed
         
-        this.botonNivel = new BotonNivel(evt, this, 2);
+        this.actionPerformer = new BotonNivel(evt, this, 2);
 
     }//GEN-LAST:event_btnNivel2ActionPerformed
 
     private void btnNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel3ActionPerformed
         
-        this.botonNivel = new BotonNivel(evt, this, 3);
+        this.actionPerformer = new BotonNivel(evt, this, 3);
 
     }//GEN-LAST:event_btnNivel3ActionPerformed
 
     private void btnNivel4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel4ActionPerformed
         
-       this.botonNivel = new BotonNivel(evt, this, 4);
+       this.actionPerformer = new BotonNivel(evt, this, 4);
 
     }//GEN-LAST:event_btnNivel4ActionPerformed
 
     private void btnNivel5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNivel5ActionPerformed
         
-        this.botonNivel = new BotonNivel(evt, this, 5);
+        this.actionPerformer = new BotonNivel(evt, this, 5);
 
     }//GEN-LAST:event_btnNivel5ActionPerformed
 

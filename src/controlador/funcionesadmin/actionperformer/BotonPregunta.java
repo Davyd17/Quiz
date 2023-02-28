@@ -1,5 +1,5 @@
 
-package controlador.funcionesadmin.actionperformed;
+package controlador.funcionesadmin.actionperformer;
 
 import controlador.Info;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import vista.FuncionesAdmin;
  *
  * @author PC1
  */
-public final class BotonPregunta extends ActionPerformedAbstract{
+public final class BotonPregunta extends ActionPerformerAbstract{
 
     public BotonPregunta(ActionEvent evt, FuncionesAdmin FUNCIONES_ADMIN, int PreguntaIndice) {
         super(FUNCIONES_ADMIN);

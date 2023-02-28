@@ -89,7 +89,9 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        lblSalir.setBackground(new java.awt.Color(255, 153, 0));
         lblSalir.setText("Salir");
+        lblSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblSalirMouseClicked(evt);

@@ -5,27 +5,29 @@
 package vista;
 
 import controlador.SetImagen;
-import controlador.juego.AccesLabels;
+import controlador.juego.JuegoControl;
+import controlador.juego.JuegoInfo;
+import controlador.juego.actionperfomer.ActionPerformerAbstract;
+import controlador.juego.actionperfomer.BotonAceptar;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
-/**
- *
- * @author PC1
- */
 public class Juego extends javax.swing.JFrame {
 
     private final SetImagen SET_IMAGE = new SetImagen(this);
     private final String URL_ICONO = "vista/images/icono.png";
-    private final AccesLabels accesLabels = new AccesLabels(this);
+    private final JuegoInfo juegoInfo = new JuegoInfo(this);
+    private ActionPerformerAbstract action;
     
     public Juego() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        //this.lblNombreUsuario.setText(Principal.getInfoJugador().getNombreUsuario());
-        this.accesLabels.setLabels();
+        this.juegoInfo.showInfo();
     }
     
     @Override
@@ -56,20 +58,36 @@ public class Juego extends javax.swing.JFrame {
         lblCategoria = new javax.swing.JLabel();
         lblNivel = new javax.swing.JLabel();
         lblPuntos = new javax.swing.JLabel();
+        lblPuntosAcumulados = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("QUIZ!");
         setBackground(new java.awt.Color(255, 255, 255));
 
         pnlJuego.setBackground(new java.awt.Color(255, 255, 255));
+        pnlJuego.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblPreguntaContenido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPreguntaContenido.setText("Contenido de la pregunta");
+        lblPreguntaContenido.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 204, 0), new java.awt.Color(204, 153, 0)));
+        lblPreguntaContenido.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPreguntaContenido.setVerticalAlignment(SwingConstants.CENTER);
+        pnlJuego.add(lblPreguntaContenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 128, 422, 117));
 
         lblNombreUsuario.setText("Nombre de usuario");
+        pnlJuego.add(lblNombreUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, -1, -1));
 
         lblCerrarSesion.setText("Cerrar Sesion");
         lblCerrarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCerrarSesionMouseClicked(evt);
+            }
+        });
+        pnlJuego.add(lblCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, -1, -1));
 
         grupobtnOpciones.add(rbtnOpcion1);
         rbtnOpcion1.setText("Opcion 1");
@@ -78,9 +96,11 @@ public class Juego extends javax.swing.JFrame {
                 rbtnOpcion1ActionPerformed(evt);
             }
         });
+        pnlJuego.add(rbtnOpcion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(264, 290, 106, -1));
 
         grupobtnOpciones.add(rbtnOpcion2);
         rbtnOpcion2.setText("Opcion 2");
+        pnlJuego.add(rbtnOpcion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(264, 323, -1, -1));
 
         grupobtnOpciones.add(rbtnOpcion3);
         rbtnOpcion3.setText("Opcion 3");
@@ -89,105 +109,70 @@ public class Juego extends javax.swing.JFrame {
                 rbtnOpcion3ActionPerformed(evt);
             }
         });
+        pnlJuego.add(rbtnOpcion3, new org.netbeans.lib.awtextra.AbsoluteConstraints(264, 356, -1, -1));
 
         grupobtnOpciones.add(rbtnOpcion4);
         rbtnOpcion4.setText("Opcion 4");
+        pnlJuego.add(rbtnOpcion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(264, 395, -1, -1));
 
         lblCategoria.setText("Categoria");
+        pnlJuego.add(lblCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 94, -1, -1));
 
         lblNivel.setText("Nivel");
+        pnlJuego.add(lblNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 42, -1, -1));
 
         lblPuntos.setText("Puntos");
+        pnlJuego.add(lblPuntos, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 64, -1, -1));
 
-        javax.swing.GroupLayout pnlJuegoLayout = new javax.swing.GroupLayout(pnlJuego);
-        pnlJuego.setLayout(pnlJuegoLayout);
-        pnlJuegoLayout.setHorizontalGroup(
-            pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addGap(331, 331, 331)
-                                .addComponent(lblCategoria))
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addGap(260, 260, 260)
-                                .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rbtnOpcion4)
-                                    .addComponent(rbtnOpcion3)
-                                    .addComponent(rbtnOpcion1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rbtnOpcion2)))
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addGap(157, 157, 157)
-                                .addComponent(lblPreguntaContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 217, Short.MAX_VALUE))
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblPuntos)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuegoLayout.createSequentialGroup()
-                                .addComponent(lblNivel)
-                                .addGap(137, 137, 137)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCerrarSesion)
-                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap())
-        );
-        pnlJuegoLayout.setVerticalGroup(
-            pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(lblNivel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPuntos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addGap(60, 60, 60)
-                        .addComponent(lblCategoria)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPreguntaContenido, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(rbtnOpcion1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbtnOpcion2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbtnOpcion3)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtnOpcion4))
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(lblNombreUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblCerrarSesion)))
-                .addContainerGap(58, Short.MAX_VALUE))
-        );
+        lblPuntosAcumulados.setText("Puntos acumulados");
+        pnlJuego.add(lblPuntosAcumulados, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 14, -1, -1));
+
+        btnAceptar.setText("ACEPTAR");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
+        pnlJuego.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(341, 443, -1, -1));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/images/quizLogo.png"))); // NOI18N
+        pnlJuego.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 590, 310));
+        pnlJuego.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 500, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlJuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlJuego, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlJuego, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlJuego, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rbtnOpcion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnOpcion1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnOpcion1ActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+
+        this.action = new BotonAceptar(this, evt);
+
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void rbtnOpcion3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnOpcion3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtnOpcion3ActionPerformed
+
+    private void rbtnOpcion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnOpcion1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnOpcion1ActionPerformed
+
+    private void lblCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarSesionMouseClicked
+
+        JuegoControl juegoControl = new JuegoControl(this);
+        juegoControl.salirYGuardar();
+
+    }//GEN-LAST:event_lblCerrarSesionMouseClicked
 
     /**
      * @param args the command line arguments
@@ -225,14 +210,16 @@ public class Juego extends javax.swing.JFrame {
     }
     
     //Getters & Setters
-    
+
     public JLabel getLblCategoria() {
-        return lblPuntos;
+        return lblCategoria;
     }
 
     public void setLblCategoria(JLabel lblCategoria) {
-        this.lblPuntos = lblCategoria;
+        this.lblCategoria = lblCategoria;
     }
+    
+    
 
     public JLabel getLblNivel() {
         return lblNivel;
@@ -265,19 +252,75 @@ public class Juego extends javax.swing.JFrame {
     public void setLblPuntos(JLabel lblPuntos) {
         this.lblPuntos = lblPuntos;
     }
+
+    public JLabel getLblPuntosAcumulados() {
+        return lblPuntosAcumulados;
+    }
+
+    public void setLblPuntosAcumulados(JLabel lblPuntosAcumulados) {
+        this.lblPuntosAcumulados = lblPuntosAcumulados;
+    }
+
+    public JRadioButton getRbtnOpcion1() {
+        return rbtnOpcion1;
+    }
+
+    public void setRbtnOpcion1(JRadioButton rbtnOpcion1) {
+        this.rbtnOpcion1 = rbtnOpcion1;
+    }
+
+    public JRadioButton getRbtnOpcion2() {
+        return rbtnOpcion2;
+    }
+
+    public void setRbtnOpcion2(JRadioButton rbtnOpcion2) {
+        this.rbtnOpcion2 = rbtnOpcion2;
+    }
+
+    public JRadioButton getRbtnOpcion3() {
+        return rbtnOpcion3;
+    }
+
+    public void setRbtnOpcion3(JRadioButton rbtnOpcion3) {
+        this.rbtnOpcion3 = rbtnOpcion3;
+    }
+
+    public JRadioButton getRbtnOpcion4() {
+        return rbtnOpcion4;
+    }
+
+    public void setRbtnOpcion4(JRadioButton rbtnOpcion4) {
+        this.rbtnOpcion4 = rbtnOpcion4;
+    }
+
+    public ButtonGroup getGrupobtnOpciones() {
+        return grupobtnOpciones;
+    }
+
+    public void setGrupobtnOpciones(ButtonGroup grupobtnOpciones) {
+        this.grupobtnOpciones = grupobtnOpciones;
+    }
+    
+    
+    
+    
+    
     
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.ButtonGroup grupobtnOpciones;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblCerrarSesion;
     private javax.swing.JLabel lblNivel;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JLabel lblPreguntaContenido;
     private javax.swing.JLabel lblPuntos;
+    private javax.swing.JLabel lblPuntosAcumulados;
     private javax.swing.JPanel pnlJuego;
     private javax.swing.JRadioButton rbtnOpcion1;
     private javax.swing.JRadioButton rbtnOpcion2;

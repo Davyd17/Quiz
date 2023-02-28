@@ -1,11 +1,11 @@
 
-package controlador.funcionesadmin.actionperformed;
+package controlador.funcionesadmin.actionperformer;
 
 import controlador.Info;
 import java.awt.event.ActionEvent;
 import vista.FuncionesAdmin;
 
-public final class BotonCancelar extends ActionPerformedAbstract{
+public final class BotonCancelar extends ActionPerformerAbstract{
 
     public BotonCancelar(ActionEvent evt, FuncionesAdmin FUNCIONES_ADMIN) {
         super(FUNCIONES_ADMIN);
@@ -17,7 +17,6 @@ public final class BotonCancelar extends ActionPerformedAbstract{
         
         if (Info.getNivelDto() != null) {
 
-           //super.getACCESO_COMPONENTES().setVistaComponentes(true, true, true);
                 super.getCONTROL_CAMPOS().vaciarCampos(false, true);
                 super.getACCESO_COMPONENTES().setVistaComponentes(true, true, false);
             
